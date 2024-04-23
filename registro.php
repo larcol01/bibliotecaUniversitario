@@ -10,6 +10,7 @@ and open the template in the editor.
           <title>Registro</title>
     </head>
     <body>
+        
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -78,7 +79,7 @@ and open the template in the editor.
         <?php
          /* Inlcuimos la conexion a la BD */
         include 'conexion.php';
-
+//hola mundo
         // Obtenemos la conexión utilizando la función getConn() (definida en el php de conexion a la BD)
         $conexion =  getConnexion();
         //aqui cuando se le da al boton enviar entra
