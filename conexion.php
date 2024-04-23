@@ -13,5 +13,5 @@ function getConnexion(){
     }
     $conexion->set_charset('utf8');
     return $conexion;
-    
+    //
 }

@@ -40,7 +40,7 @@ and open the template in the editor.
         include './conexion.php';
         /*Aqui se obtiene la conexion de la base de datos utilizando la funcion getConexion() que he creado en otro php diferente*/
         $conexion  = getConnexion();
-        
+        //
         
         
         ?>
