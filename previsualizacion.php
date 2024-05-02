@@ -9,7 +9,7 @@ session_start();
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <title>Menu_invitado</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <style>
+       <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -36,13 +36,11 @@ session_start();
             background-color: #f2f2f2;
             border-radius: 8px 8px 0 0;
         }
-        .cursor{
-            cursor: url('./libro.png'), auto;
-        }
+        
         th, td {
             text-align: center;
             padding: 8px;
-            border-bottom: 1px solid #ddd; /* Línea inferior para todas las celdas /
+            border-bottom: 1px solid #ddd; 
         }
         th {
             background-color: #693f82;
@@ -51,11 +49,12 @@ session_start();
         tr:nth-child(even) {
             background-color: #9b0cfa21;
         }
+       
         tr:hover {
             background-color: #26002d54;
         }
         tbody tr td {
-            border-bottom-color: #801cbe; / Color de la línea inferior del tbody */
+            border-bottom-color: #801cbe; 
         }
         hr {
             margin-top: 20px;
@@ -125,7 +124,16 @@ session_start();
 
             <br>
             <form action="previsualizacion.php" method="POST">
-                <label for="solicitudes">¿Te gustaría comprar? Solicita el cambio</label><br>
+                <label for="solicitudes">¿Te gustaría comprar? Solicita el cambio
+                    <select name="cambiarRol" id="lang">
+                        <option value="alumno">alumno</option>
+                        <option value="profesor">profesor</option>
+                        <option value="doctorado">doctorado</option>
+                        <option value="autor">autor</option>
+
+                    </select>
+                </label><br>
+    
                 <input type="submit" name="solicitar" value="CAMBIAR ROL" />
             </form><br>
 
@@ -154,7 +162,14 @@ session_start();
                     // No hay solicitud existente, procede a insertar una nueva solicitud
 
 
-                    $consulta = "INSERT INTO solicitudes (id_usuario) VALUES ($id_usuario);";
+                    if(isset($_POST['cambiarRol'])) {
+                        $opcionSeleccionada = $_POST['cambiarRol'];
+                           $resultado = mysqli_query($conexion, "insert into solicitudes (cambiarRol) value ('$opcionSeleccionada')")
+                                        or die("Fallo el insert");
+                    }
+      
+      
+      
 
                     $consulta = mysqli_query($conexion, $consulta)
                             or die("Fallo en la consulta");
