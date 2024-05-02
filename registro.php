@@ -79,8 +79,7 @@ and open the template in the editor.
         <?php
          /* Inlcuimos la conexion a la BD */
         include 'conexion.php';
-//hola mundokdm
-////
+
         // Obtenemos la conexión utilizando la función getConn() (definida en el php de conexion a la BD)
         $conexion =  getConnexion();
         //aqui cuando se le da al boton enviar entra
@@ -121,18 +120,6 @@ and open the template in the editor.
             }
 
 
-
-
-
-            
-        
-        
-        
-        
-        
-        
-        
-        
         ?>
         <form name="form" action="" method="POST" enctype="multipart/form-data">
             <h1>Registro</h1>
