@@ -5,9 +5,70 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head>
+   <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Login</title>
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 50px;
+        }
+        form {
+            margin: 20px auto;
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form input[type="text"],
+        form input[type="password"],
+        form input[type="submit"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        form input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        hr {
+            margin-top: 20px;
+            border: 0;
+            border-top: 1px solid #d9bbbb;
+        }
+        p {
+            margin-top: 20px;
+        }
+        a {
+            text-decoration: none;
+        }
+        input[type="button"] {
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="button"]:hover {
+            background-color: #005f75;
+        }
+        </style>
     </head>
     <body>
        
@@ -56,12 +117,11 @@ and open the template in the editor.
         // Verificar si el formulario  de logeo ha sido enviado
         if (isset($_POST['enviar']))
         {
-            echo "fsdl";
+            echo "1fsdl";
             // Recuperar los datos del formulario
             $usuario_ingresado = $_POST['usuario'];
             $contrasena_ingresada = $_POST['contrasena'];
-            echo $usuario_ingresado ;
-            echo $contrasena_ingresada ;
+            
            /*Aqui incluyo la conexion a la base de datos que esta creado en otro php separado */
        /* Inlcuimos la conexion a la BD */
         include 'conexion.php';
@@ -71,21 +131,23 @@ and open the template in the editor.
 
 
             /* Consulta SQL para verificar usuario y contraseña introducido */
-            $consulta = "SELECT id_usuario,nombre,tipo_rol FROM usuario WHERE nombre = '$usuario_ingresado' AND contrasena = '$contrasena_ingresada'";
+            //$consulta = "SELECT id_usuario,nombre,tipo_rol FROM usuario WHERE nombre = '$usuario_ingresado' AND contrasena = '$contrasena_ingresada'";
 
-            $consulta = mysqli_query($conexion,$consulta)
+            $consulta = mysqli_query($conexion,"SELECT id_usuario,nombre,tipo_rol FROM usuario WHERE nombre = '$usuario_ingresado' AND contrasena = '$contrasena_ingresada'")
                     or die("Fallo en la consulta");
 
             /* Sacamos la fila */
             $datosConsulta = mysqli_fetch_assoc($consulta);
 
- echo "fsdl";
+ echo "2fsdl";
             // Verificar si la consulta devuelve true porque hay resultados y son mas de 0 filas
-            if ($consulta && mysqli_num_rows($consulta) > 0)
+           
+                    $num_filas = mysqli_num_rows($consulta);
+            if ($num_filas > 0)
             {
-                echo "fsdl";
+                echo "3fsdl";
                 /* Obtengo el rol (invitado,registrado....) de la consulta realizada */
-                $_SESSION['tipo_rol'] = $datosConsulta['tipo_rol'];
+                $_SESSION['rol'] = $datosConsulta['tipo_rol'];
 
                 // Credenciales válidas, iniciar sesión
                 $_SESSION['usuario'] = $usuario_ingresado;
@@ -97,16 +159,26 @@ and open the template in the editor.
                 $_SESSION['id_usuario'] = $datosConsulta['id_usuario'];
 
                 /* Si el usuario que se logea tiene como rol invitado, solo le redirigira a previsualizacion donde podra solo observar los productos */
-                if ($_SESSION['tipo_rol'] == 'invitado')
+                if ($_SESSION['rol'] == 'invitado')
                 {
-
+                    echo "4fsdl";
+                    // Redireccionar de inmediato
+                    
                     header('Location: previsualizacion.php');
-                    exit;
-                }
-                /* En caso de que el rol del usuario sea comprador/vendedor accedera al menu normal */
-                header('Location: menu.php');
-
+                
                 exit;
+                    //header("Location: previsualizacion.php");echo "5fsdl";
+                    
+                }
+                if($_SESSION['rol'] == 'alumno'){
+                    /* En caso de que el rol del usuario sea comprador/vendedor accedera al menu normal */
+                header('Location: menu.php');
+                
+                exit;
+                }
+                
+
+                
             } else
             {
                 // Credenciales inválidas, mostrar mensaje de error
