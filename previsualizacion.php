@@ -1,17 +1,57 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<?php
+/* inicio sesion */
+session_start();
+?>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title></title>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Menu_invitado</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+                text-align: center;
+            }
+            h1 {
+                margin-top: 50px;
+            }
+            table {
+
+                margin: 20px auto;
+                width: 800px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            caption{
+                font-size: 24px;
+                font-weight: bold;
+                padding: 10px;
+                background-color: #f2f2f2;
+                border-radius: 8px 8px 0 0;
+            }
+            .cursor{
+                cursor: url('./libro.png'), auto;
+            }
+            th,td {
+                text-align: center;
+                padding: 8px;
+            }
+            th {
+                background-color: #f2f2f2;
+
+            }
+        </style>
     </head>
     <body>
        <?php
-        if (isset($_SESSION['usuario']) && isset($_SESSION['rol']) == 'invitado') {
+        if (isset($_SESSION['usuario']) && isset($_SESSION['tipo_rol']) == 'invitado') {
             ?>
 
             <h1>Bienvenido Invitado</h1>
@@ -19,21 +59,27 @@ and open the template in the editor.
             <h2>Títulos Disponibles en Catálogo</h2>
 
             <?php
-            /* Inlcuimos la conexion a la BD */
-            include 'conexion.php';
+     /* Inlcuimos la conexion a la BD */
+        include 'conexion.php';
 
-            // Obtenemos la conexión utilizando la función getConn() (definida en el php de conexion a la BD)
-             $conexion = getConn();
+        // Obtenemos la conexión utilizando la función getConn() (definida en el php de conexion a la BD)
+        $conexion =  getConnexion();
 
-            $consultaGeneral = "select * from libro;";
-            $resultado = mysqli_query($conexion, $consultaGeneral)
+
+            //$consultaGeneral = "select * from libros;";
+            $resultado = mysqli_query($conexion, "select * from libros;")
                     or die("Fallo en la consulta");
             ?>
             <table>
                 <tr>
+                    <th>ISBN</th>
                     <th>Titulo</th>
+                    <th>Idioma</th>
                     <th>Autor</th>
-                    <th>Precio</th>
+                    <th>Nº Ejemplares</th>
+                    <th>Estado</th>
+                    <th>Año</th>
+                    <th>Tema</th>
                     <th>Editorial</th>
                 </tr>
 
@@ -42,14 +88,20 @@ and open the template in the editor.
                     ?>
 
                     <tr>
+                        <td><?php echo $row['isbn'] ?></td>
                         <td><?php echo $row['titulo'] ?></td>
-                        <td><?php echo $row['autor'] ?></td>
-                        <td><?php echo $row['precio'] ?> €</td>
-                        <td><?php echo $row['editorial'] ?> </td>
+                        <td><?php echo $row['idioma'] ?></td>
+                        <td><?php echo $row['nombre_autor'] ?></td>
+                        <td><?php echo $row['num_ejemplares'] ?></td>
+                        <td><?php echo $row['estado'] ?> </td>
+                        <td><?php echo $row['año'] ?></td>
+                        <td><?php echo $row['tema'] ?></td>
+                        <td><?php echo $row['nombre_editorial'] ?> </td>
                     </tr>
 
 
-                <?php } ?>
+                <?php } 
+                ?>
                      </table><br>
             <hr>
 
