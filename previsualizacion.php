@@ -51,7 +51,7 @@ session_start();
         }
        
         tr:hover {
-            background-color: #26002d54;
+            background-color: rgba(155, 12, 250, 0.13);
         }
         tbody tr td {
             border-bottom-color: #801cbe; 
@@ -65,6 +65,7 @@ session_start();
     </head>
     <body>
        <?php
+       //aqui se comprueba si los datos introducido en el login son de un usuario invitado y si esta en rol invitado entra
         if (isset($_SESSION['usuario']) && isset($_SESSION['tipo_rol']) == 'invitado') {
             ?>
 
@@ -72,17 +73,18 @@ session_start();
             <hr>
             
             <?php
-     /* Inlcuimos la conexion a la BD */
+     /* aqui incluyo la base de datos que antes e hecho la conexion en otra clase */
         include 'conexion.php';
 
-        // Obtenemos la conexión utilizando la función getConn() (definida en el php de conexion a la BD)
+        // Obtenemos la conexión utilizando la función getConn() ( que hemos definido en el php de conexion a la BD)
         $conexion =  getConnexion();
 
 
-            //$consultaGeneral = "select * from libros;";
+            //aqui hacemos la consulta a la base de datos para que saque todos lo libros que tiene la baase de datos
             $resultado = mysqli_query($conexion, "select * from libros;")
                     or die("Fallo en la consulta");
             ?>
+            <!--aqui hagacemos la tabla -->
             <table>
                 <caption>Libros</caption>
                     <thead>
@@ -98,12 +100,13 @@ session_start();
                             <th>Editorial</th>
                         </tr>
                     </thead>
-
+                <!--aqui hagacemos mientras que en la consulta que hemos hecho antes siga habiendo cosas se va a estar hejecutando asta que se acaben el contenido de la misma-->
                 <?php
                 while ($row = mysqli_fetch_assoc($resultado)) {
                     ?>
                     <tbody>
                         <tr>
+                            <!--aqui se optiene cada parte de la consulta para hacer las columnas--> 
                             <td><?php echo $row['isbn'] ?></td>
                             <td><?php echo $row['titulo'] ?></td>
                             <td><?php echo $row['idioma'] ?></td>
@@ -124,7 +127,8 @@ session_start();
 
             <br>
             <form action="previsualizacion.php" method="POST">
-                <label for="solicitudes">¿Te gustaría comprar? Solicita el cambio
+                 <!--aqui le damos al usuario que esta de invitado pida la solicitud de cambio del rol del que se encuentra -->
+                <label for="solicitudes">¿Te interesa algun libro? Solicita el cambio a 
                     <select name="cambiarRol" id="lang">
                         <option value="alumno">alumno</option>
                         <option value="profesor">profesor</option>
@@ -133,7 +137,7 @@ session_start();
 
                     </select>
                 </label><br>
-    
+                <!--aqui se enviaria la solicitud del cambio-->
                 <input type="submit" name="solicitar" value="CAMBIAR ROL" />
             </form><br>
 
@@ -161,20 +165,17 @@ session_start();
                 if (mysqli_num_rows($resultado_existente) == 0) {
                     // No hay solicitud existente, procede a insertar una nueva solicitud
 
-
+                    //aqui comprueba si se ha enviado un formulario de cambiarRol 
                     if(isset($_POST['cambiarRol'])) {
+                        //aqui recoge la informacion que se a seleccionado 
                         $opcionSeleccionada = $_POST['cambiarRol'];
+                        //aqui lo guarda en la base de datos 
                            $resultado = mysqli_query($conexion, "insert into solicitudes (cambiarRol) value ('$opcionSeleccionada')")
                                         or die("Fallo el insert");
                     }
       
-      
-      
-
-                    $consulta = mysqli_query($conexion, $consulta)
-                            or die("Fallo en la consulta");
                 } else {
-                    // Ya hay una solicitud existente para el usuario
+                    //aqui si ya existe una solicitud que para el usuario sale esto
                     echo "Ya ha enviado una solicitud previamente. Espere a que el administrador cambie su rol.";
                 }
             }
