@@ -10,44 +10,59 @@ session_start();
         <title>Menu_invitado</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f4f4f4;
-                text-align: center;
-            }
-            h1 {
-                margin-top: 50px;
-            }
-            table {
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 50px;
+        }
+        table {
 
-                margin: 20px auto;
-                width: 800px;
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
-            caption{
-                font-size: 24px;
-                font-weight: bold;
-                padding: 10px;
-                background-color: #f2f2f2;
-                border-radius: 8px 8px 0 0;
-            }
-            .cursor{
-                cursor: url('./libro.png'), auto;
-            }
-            th,td {
-                text-align: center;
-                padding: 8px;
-            }
-            th {
-                background-color: #f2f2f2;
-
-            }
-        </style>
+            margin: 20px auto;
+            width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        caption{
+            font-size: 24px;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 8px 8px 0 0;
+        }
+        .cursor{
+            cursor: url('./libro.png'), auto;
+        }
+        th, td {
+            text-align: center;
+            padding: 8px;
+            border-bottom: 1px solid #ddd; /* Línea inferior para todas las celdas /
+        }
+        th {
+            background-color: #693f82;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #9b0cfa21;
+        }
+        tr:hover {
+            background-color: #26002d54;
+        }
+        tbody tr td {
+            border-bottom-color: #801cbe; / Color de la línea inferior del tbody */
+        }
+        hr {
+            margin-top: 20px;
+            border: 0;
+            border-top: 1px solid #d9bbbb;
+        }
+    </style>
     </head>
     <body>
        <?php
@@ -56,8 +71,7 @@ session_start();
 
             <h1>Bienvenido Invitado</h1>
             <hr>
-            <h2>Títulos Disponibles en Catálogo</h2>
-
+            
             <?php
      /* Inlcuimos la conexion a la BD */
         include 'conexion.php';
@@ -71,38 +85,42 @@ session_start();
                     or die("Fallo en la consulta");
             ?>
             <table>
-                <tr>
-                    <th>ISBN</th>
-                    <th>Titulo</th>
-                    <th>Idioma</th>
-                    <th>Autor</th>
-                    <th>Nº Ejemplares</th>
-                    <th>Estado</th>
-                    <th>Año</th>
-                    <th>Tema</th>
-                    <th>Editorial</th>
-                </tr>
+                <caption>Libros</caption>
+                    <thead>
+                        <tr>
+                            <th>ISBN</th>
+                            <th>Titulo</th>
+                            <th>Idioma</th>
+                            <th>Autor</th>
+                            <th>Nº Ejemplares</th>
+                            <th>Estado</th>
+                            <th>Año</th>
+                            <th>Tema</th>
+                            <th>Editorial</th>
+                        </tr>
+                    </thead>
 
                 <?php
                 while ($row = mysqli_fetch_assoc($resultado)) {
                     ?>
-
-                    <tr>
-                        <td><?php echo $row['isbn'] ?></td>
-                        <td><?php echo $row['titulo'] ?></td>
-                        <td><?php echo $row['idioma'] ?></td>
-                        <td><?php echo $row['nombre_autor'] ?></td>
-                        <td><?php echo $row['num_ejemplares'] ?></td>
-                        <td><?php echo $row['estado'] ?> </td>
-                        <td><?php echo $row['año'] ?></td>
-                        <td><?php echo $row['tema'] ?></td>
-                        <td><?php echo $row['nombre_editorial'] ?> </td>
-                    </tr>
-
+                    <tbody>
+                        <tr>
+                            <td><?php echo $row['isbn'] ?></td>
+                            <td><?php echo $row['titulo'] ?></td>
+                            <td><?php echo $row['idioma'] ?></td>
+                            <td><?php echo $row['nombre_autor'] ?></td>
+                            <td><?php echo $row['num_ejemplares'] ?></td>
+                            <td><?php echo $row['estado'] ?> </td>
+                            <td><?php echo $row['año'] ?></td>
+                            <td><?php echo $row['tema'] ?></td>
+                            <td><?php echo $row['nombre_editorial'] ?> </td>
+                        </tr>
+                    </tbody>
 
                 <?php } 
                 ?>
-                     </table><br>
+            </table>
+            <br>
             <hr>
 
             <br>
