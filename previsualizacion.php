@@ -194,19 +194,14 @@ session_start();
             <hr>
 
             <br>
-            <form action="previsualizacion.php" method="POST">
-                 <!--aqui le damos al usuario que esta de invitado pida la solicitud de cambio del rol del que se encuentra -->
-                <label for="solicitudes">¿Te interesa algun libro? Solicita el cambio a 
-                    <select name="cambiarRol" id="lang"class="select_rol">
-                        <option value="alumno">alumno</option>
-                        <option value="profesor">profesor</option>
-                        <option value="doctorado">doctorado</option>
-                        <option value="autor">autor</option>
+            
 
-                    </select>
-                </label><br>
-                <!--aqui se enviaria la solicitud del cambio-->
-                <input type="submit" name="solicitar" value="CAMBIAR ROL" class="boton" />
+
+            <!-- Formulario con un boton para salir, al pulsarlo se redirige al login y se cierra la sesion(Gestionado en el login el cierre de sesion) -->
+            <hr>
+             <form action="previsualizacion.php" method="POST">
+                <label for="solicitudes">¿Te gustaría comprar? Solicita el cambio</label><br>
+                <input type="submit" name="solicitar" value="CAMBIAR ROL" class="boton"/>
             </form><br>
 
 
@@ -214,7 +209,7 @@ session_start();
             <hr>
             <form name="form" action="login.php" method="POST">
 
-                <input type="submit" name="salir" value="Salir" class="boton_salir" />
+                <input type="submit" name="salir" value="Salir" />
 
             </form><br>
 
@@ -233,17 +228,13 @@ session_start();
                 if (mysqli_num_rows($resultado_existente) == 0) {
                     // No hay solicitud existente, procede a insertar una nueva solicitud
 
-                    //aqui comprueba si se ha enviado un formulario de cambiarRol 
-                    if(isset($_POST['cambiarRol'])) {
-                        //aqui recoge la informacion que se a seleccionado 
-                        $opcionSeleccionada = $_POST['cambiarRol'];
-                        //aqui lo guarda en la base de datos 
-                           $resultado = mysqli_query($conexion, "insert into solicitudes (cambiarRol) value ('$opcionSeleccionada')")
-                                        or die("Fallo el insert");
-                    }
-      
+
+                    $consulta = "INSERT INTO solicitudes (id_usuario) VALUES ($id_usuario);";
+
+                    $consulta = mysqli_query($conexion, $consulta)
+                            or die("Fallo en la consulta");
                 } else {
-                    //aqui si ya existe una solicitud que para el usuario sale esto
+                    // Ya hay una solicitud existente para el usuario
                     echo "Ya ha enviado una solicitud previamente. Espere a que el administrador cambie su rol.";
                 }
             }
