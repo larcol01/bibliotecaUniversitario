@@ -9,7 +9,7 @@ class Producto
     private $cantidad;
 
     /* Constructor */
-    public function __construct($titulo, $precio, $cantidad)
+    public function __construct($isbn, $titulo, $idioma,$nombreAutor, $cantidad)
     {
         $this->titulo = $titulo;
         $this->precio = $precio;
