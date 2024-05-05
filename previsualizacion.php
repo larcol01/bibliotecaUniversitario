@@ -81,6 +81,27 @@ session_start();
             transform: translateY(1px); 
             box-shadow: none; 
         }
+
+        .boton_salir{
+            background-color: #801cbe; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 4px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: background-color 0.3s, transform 0.2s; 
+            box-shadow: 0 4px 6px rgb(55, 58, 162); 
+        }
+        .boton_salir:hover {
+            background-color: rgb(55, 58, 162); 
+            transform: translateY(-2px); 
+        }
+        .boton_salir:active{
+            background-color: #801cbe; 
+            transform: translateY(1px); 
+            box-shadow: none; 
+        }
         .select_rol{
             padding: 10px;
             font-size: 16px; 
@@ -104,9 +125,10 @@ session_start();
         }
         .select_rol option:hover {
             background-color: #801cbe; 
-
+     
         }
     </style>
+
     </head>
     <body>
        <?php
@@ -192,7 +214,7 @@ session_start();
             <hr>
             <form name="form" action="login.php" method="POST">
 
-                <input type="submit" name="salir" value="Salir" class="boton" />
+                <input type="submit" name="salir" value="Salir" class="boton_salir" />
 
             </form><br>
 

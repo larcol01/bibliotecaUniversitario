@@ -21,7 +21,7 @@ and open the template in the editor.
         $conexion =  getConnexion();
         
         /* SI HAY UN USUARIO LOGEADO ENTRA */
-        if (isset($_SESSION['usuario']) && isset($_SESSION['rol']) == 'vendedor') {
+        if (isset($_SESSION['usuario']) && isset($_SESSION['rol']) == 'administrador') {
 
             /* Si se ha enviado algo desde el menu entra en este if */
             if (isset($_REQUEST['enviar'])) {
@@ -33,7 +33,7 @@ and open the template in the editor.
             /* Este if evalua que se haya seleccionado algo en el menu, si es que si entra */
             if (isset($_SESSION['opcionMenu'])) {
 
-//ROL VENDEDOR (ADMIN)
+//ROL ADMINISTRADOR
 //OPCION VER SOLICITUDES
                 /* Si el boton pulsado es ver solicitudes entra */
                 if ($_SESSION['opcionMenu'] == 'VerSolicitudes') {
