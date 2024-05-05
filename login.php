@@ -143,6 +143,7 @@ and open the template in the editor.
             // Verificar si la consulta devuelve true porque hay resultados y son mas de 0 filas
            
                     $num_filas = mysqli_num_rows($consulta);
+                     echo "3fsdl";
             if ($num_filas > 0)
             {
                 echo "3fsdl";
@@ -167,12 +168,12 @@ and open the template in the editor.
                     header('Location: previsualizacion.php');
                 
                 exit;
-                    //header("Location: previsualizacion.php");echo "5fsdl";
+                    //echo "5fsdl";header("refresh:5;url=otra_pagina.php");
                     
                 }
                 if($_SESSION['rol'] == 'alumno'){
                     /* En caso de que el rol del usuario sea comprador/vendedor accedera al menu normal */
-                header('Location: menu.php');
+                    header('Location: menu.php');
                 
                 exit;
                 }

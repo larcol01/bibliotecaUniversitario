@@ -61,12 +61,57 @@ session_start();
             border: 0;
             border-top: 1px solid #d9bbbb;
         }
+        .boton{
+            background-color: rgb(55, 58, 162); 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 4px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: background-color 0.3s, transform 0.2s; 
+            box-shadow: 0 4px 6px #801cbe; 
+        }
+        .boton:hover {
+            background-color: #801cbe; 
+            transform: translateY(-2px); 
+        }
+        .boton:active{
+            background-color: rgb(55, 58, 162); 
+            transform: translateY(1px); 
+            box-shadow: none; 
+        }
+        .select_rol{
+            padding: 10px;
+            font-size: 16px; 
+            border: 2px solid rgb(55, 58, 162);
+            border-radius: 4px;
+            background-color: #fff; 
+            transition: border-color 0.3s;
+        }
+        .select_rol:hover{
+            border-color: #801cbe;
+        }
+        .select_rol option:checked {
+            background-color: rgb(55, 58, 162);
+            color: #fff;
+        }
+        .select_rol option {
+            padding: 8px;
+            background-color: #fff;
+            color: #333; 
+            transition: background-color 0.3s, color 0.3s; 
+        }
+        .select_rol option:hover {
+            background-color: #801cbe; 
+
+        }
     </style>
     </head>
     <body>
        <?php
        //aqui se comprueba si los datos introducido en el login son de un usuario invitado y si esta en rol invitado entra
-        if (isset($_SESSION['usuario']) && isset($_SESSION['tipo_rol']) == 'invitado') {
+        if (isset($_SESSION['usuario']) && isset($_SESSION['rol']) == 'invitado') {
             ?>
 
             <h1>Bienvenido Invitado</h1>
@@ -129,7 +174,7 @@ session_start();
             <form action="previsualizacion.php" method="POST">
                  <!--aqui le damos al usuario que esta de invitado pida la solicitud de cambio del rol del que se encuentra -->
                 <label for="solicitudes">¿Te interesa algun libro? Solicita el cambio a 
-                    <select name="cambiarRol" id="lang">
+                    <select name="cambiarRol" id="lang"class="select_rol">
                         <option value="alumno">alumno</option>
                         <option value="profesor">profesor</option>
                         <option value="doctorado">doctorado</option>
@@ -138,7 +183,7 @@ session_start();
                     </select>
                 </label><br>
                 <!--aqui se enviaria la solicitud del cambio-->
-                <input type="submit" name="solicitar" value="CAMBIAR ROL" />
+                <input type="submit" name="solicitar" value="CAMBIAR ROL" class="boton" />
             </form><br>
 
 
@@ -146,7 +191,7 @@ session_start();
             <hr>
             <form name="form" action="login.php" method="POST">
 
-                <input type="submit" name="salir" value="Salir" />
+                <input type="submit" name="salir" value="Salir" class="boton" />
 
             </form><br>
 
