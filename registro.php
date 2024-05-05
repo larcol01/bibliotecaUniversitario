@@ -55,24 +55,24 @@ and open the template in the editor.
                 box-sizing: border-box;
             }
             input[type="submit"] {
-                background-color: #4CAF50;
+                background-color: rgb(55, 58, 162);
                 color: white;
                 border: none;
                 cursor: pointer;
             }
-            input[type="submit"]:hover {
-                background-color: #45a049;
+            form input[type="submit"]:hover {
+            background-color: #801cbe;
             }
             input[type="button"] {
                 padding: 10px 20px;
-                background-color: #008CBA;
+                background-color: #801cbe;
                 color: white;
                 border: none;
                 border-radius: 4px;
                 cursor: pointer;
             }
             input[type="button"]:hover {
-                background-color: #005f75;
+                background-color: rgb(55, 58, 162)
             }
         </style>
        
@@ -100,7 +100,7 @@ and open the template in the editor.
                     $dni = mysqli_real_escape_string($conexion, $_REQUEST['dni']);
 
                     // aqui ya se insertan los datos en la base de datos
-                    $sql = "INSERT INTO usuario(nombre, apellido1, apellido2, nombre_usuario, contraseña, email, telefono, dni) 
+                    $sql = "INSERT INTO usuario(nombre, apellido1, apellido2, nombre_usuario, contrasena, email, telefono, dni) 
                             VALUES ('$nombre', '$apellido1', '$apellido2', '$nombre', '$contrasena', '$email', '$telefono', '$dni')";
 
                     // aqui si la consulta se ha hecho correctamente saldra un mensaje de que se ha creado bien el usuario

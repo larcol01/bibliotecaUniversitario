@@ -108,7 +108,7 @@ and open the template in the editor.
                     </form>
                     <?php
                 }
-//ROL VENDEDOR (ADMIN)
+//ROL ADMINISTRADOR
 //OPCION CAMBIAR ESTADOS
                 /* Si el boton que se pulsa en le menu es cambiar estados (vendedor), entra en el  if */
                 if ($_SESSION['opcionMenu'] == 'CambiarEstados') {

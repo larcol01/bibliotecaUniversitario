@@ -9,6 +9,99 @@ session_start();
         <title></title>
     </head>
     <body>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+                text-align: center;
+            }
+
+            h1 {
+                margin-top: 50px;
+            }
+
+            h2 {
+                font-size: 20px;
+                margin-top: 20px;
+            }
+            
+            h3 {
+                margin-top: 20px;
+                font-size: 24px;
+            }
+
+            form {
+            margin: 20px auto;
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            form input[type="text"],
+            form input[type="password"],
+            form input[type="submit"] {
+                width: calc(100% - 20px);
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+            form input[type="submit"] {
+                background-color: rgb(55, 58, 162);
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+            form input[type="submit"]:hover {
+                background-color: #801cbe;
+            }
+            hr {
+                margin-top: 20px;
+                border: 0;
+                border-top: 1px solid #d9bbbb;
+            }
+
+            input[type="submit"] {
+                background-color: #801cbe;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s, transform 0.2s;
+                box-shadow: 0 4px 6px #801cbe;
+                margin-top: 10px;
+            }
+            .boton input[type="submit"] {
+                background-color: #801cbe;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s, transform 0.2s;
+                box-shadow: 0 4px 6px rgb(55, 58, 162);
+                margin-top: 10px;
+            }
+            .boton input[type="submit"]:hover {
+                background-color: rgb(55, 58, 162);
+                transform: translateY(-2px);
+            }
+
+            .boton input[type="submit"]:active {
+                background-color: rgb(55, 58, 162);
+                transform: translateY(1px);
+                box-shadow: none;
+            }
+            
+        </style>
+        
         <?php
         /* Verifico que hay un usuario guardado en la variable de sesion, lo cual me indica si se han logeado, si este es el caso entra en el if
           y se hace la comprobacion del rol para redirigir al usuario a su menu personalizado en funcion de este */
@@ -58,13 +151,19 @@ session_start();
                     ?>
                     <label for="solicitudes">Comprueba las solicitudes de tus clientes</label><br><br>
                     <input type="submit" value="VerSolicitudes" name="enviar" /><br><br>
-
-                    <label for="estados">Cambia los estados de los pedidos</label><br><br>
-                    <input type="submit" value="CambiarEstados" name="enviar" /><br><br>
-
-                    <label for="nuevosLibros">Añade nuevos títulos disponibles</label><br><br>
+                    
+                    
+                    <label for="nuevosLibros">Añadir nuevos libros</label><br><br>
                     <input type="submit" value="InsertarLibro" name="enviar" /><br><br>
+                        
+                    
+                    <label for="estados">Elimina libros</label><br><br>
+                    <input type="submit" value="Eliminar libros" name="enviar" /><br><br>
 
+                    
+                    <label for="nuevosLibros">Mostrar libros prestados</label><br><br>
+                    <input type="submit" value="Libros Prestados" name="enviar" /><br><br>
+                    
 
 
                     <?php
@@ -73,15 +172,18 @@ session_start();
                     ?>
                     <label for="solicitudes">Accede al catálogo y pedir</label><br><br>
                     <input type="submit" value="Pedir" name="enviar" /><br><br>
+                    
+                     <label for="solicitudes">Añadir libros</label><br><br>
+                    <input type="submit" value="Añadir Libros" name="enviar" /><br><br>
 
                     <label for="solicitudes">Devolver libros</label><br><br>
-                    <input type="submit" value="DevolverLibros" name="enviar" /><br><br>
+                    <input type="submit" value="Devolver Libros" name="enviar" /><br><br>
 
                     <?php
                 }
                 ?> 
                     <?php
-                }
+                
                 if ($rol == 'alumno') {
                     ?>
                     <label for="solicitudes">Accede al catálogo y pedir</label><br><br>
@@ -91,26 +193,58 @@ session_start();
                     <input type="submit" value="DevolverLibros" name="enviar" /><br><br>
 
                     <?php
+                }
+                ?>
+                    <?php
                 
+                if ($rol == 'profesor') {
+                    ?>
+                    <label for="solicitudes">Accede al catálogo y pedir</label><br><br>
+                    <input type="submit" value="Pedir" name="enviar" /><br><br>
+
+                    <label for="solicitudes">Devolver libros</label><br><br>
+                    <input type="submit" value="DevolverLibros" name="enviar" /><br><br>
+
+                    <?php
+                }
                 ?>
 
+                    <?php
+                
+                if ($rol == 'doctorado') {
+                    ?>
+                   <label for="solicitudes">Accede al catálogo y pedir</label><br><br>
+                    <input type="submit" value="Pedir" name="enviar" /><br><br>
+
+                    <label for="solicitudes">Devolver libros</label><br><br>
+                    <input type="submit" value="DevolverLibros" name="enviar" /><br><br>
+
+                    <?php
+                
+                ?> 
 
 
 
-            </form>
-            <hr> 
-            <!-- Formulario con un boton para salir comun a todos los usuarios, al pulsarlo se redirige al login y se cierra la sesion(Gestionado en el login el cierre de sesion) -->
 
-            <form name="form" action="login.php" method="POST" enctype="multipart/form-data">
-                <p>¿Ya terminaste?</p>
-                <input type="submit" value="salir" name="salir" />
-
-            </form>
+           
 
 
 
             <?php
-        } else {
+        }?>
+            </form>
+            <hr> 
+            <!-- Formulario con un boton para salir comun a todos los usuarios, al pulsarlo se redirige al login y se cierra la sesion(Gestionado en el login el cierre de sesion) -->
+
+            <form name="form" action="login.php" method="POST" enctype="multipart/form-data" class="boton">
+                <p>¿Ya terminaste?</p>
+                <input type="submit" value="Salir" name="salir" />
+
+            </form> 
+           
+            <?php
+            
+                } else {
             /* En caso de que no exista ningun usuario en la variable de sesion indica que nadie se ha logeado por lo tanto le prohibimos el acceso y le ofrecemos 
               volver al login para que se autentique correctamente para acceder */
             session_destroy();

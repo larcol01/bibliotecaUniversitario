@@ -110,6 +110,7 @@ session_start();
     </head>
     <body>
        <?php
+      
        //aqui se comprueba si los datos introducido en el login son de un usuario invitado y si esta en rol invitado entra
         if (isset($_SESSION['usuario']) && isset($_SESSION['rol']) == 'invitado') {
             ?>

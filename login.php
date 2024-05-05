@@ -8,7 +8,7 @@ and open the template in the editor.
    <head>
         <meta charset="UTF-8">
         <title>Login</title>
-        <style>
+         <style>
             body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -38,13 +38,13 @@ and open the template in the editor.
             box-sizing: border-box;
         }
         form input[type="submit"] {
-            background-color: #4CAF50;
+            background-color: rgb(55, 58, 162);
             color: white;
             border: none;
             cursor: pointer;
         }
         form input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #801cbe;
         }
         hr {
             margin-top: 20px;
@@ -59,14 +59,14 @@ and open the template in the editor.
         }
         input[type="button"] {
             padding: 10px 20px;
-            background-color: #008CBA;
+            background-color: #801cbe;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
         input[type="button"]:hover {
-            background-color: #005f75;
+            background-color: rgb(55, 58, 162);
         }
         </style>
     </head>
@@ -171,14 +171,66 @@ and open the template in the editor.
                     //echo "5fsdl";header("refresh:5;url=otra_pagina.php");
                     
                 }
-                if($_SESSION['rol'] == 'alumno'){
-                    /* En caso de que el rol del usuario sea comprador/vendedor accedera al menu normal */
+                 if ($_SESSION['rol'] == 'alumno')
+                {
+                    echo "4fsdl";
+                    // Redireccionar de inmediato
+                    
                     header('Location: menu.php');
                 
                 exit;
+                    //echo "5fsdl";header("refresh:5;url=otra_pagina.php");
+                    
                 }
+                if ($_SESSION['rol'] == 'profesor')
+                {
+                    echo "4fsdl";
+                    // Redireccionar de inmediato
+                    
+                    header('Location: menu.php');
                 
-
+                exit;
+                    //echo "5fsdl";header("refresh:5;url=otra_pagina.php");
+                    
+                }
+               
+                 if ($_SESSION['rol'] == 'autor')
+                {
+                    echo "4fsdl";
+                    // Redireccionar de inmediato
+                    
+                    header('Location: menu.php');
+                
+                exit;
+                    //echo "5fsdl";header("refresh:5;url=otra_pagina.php");
+                    
+                }
+                if ($_SESSION['rol'] == 'doctorado')
+                {
+                    echo "4fsdl";
+                    // Redireccionar de inmediato
+                    
+                    header('Location: menu.php');
+                
+                exit;
+                    //echo "5fsdl";header("refresh:5;url=otra_pagina.php");
+                    
+                }
+                if ($_SESSION['rol'] == 'administrador')
+                {
+                    echo "4fsdl";
+                    // Redireccionar de inmediato
+                    
+                    header('Location: menu.php');
+                
+                exit;
+                    //echo "5fsdl";header("refresh:5;url=otra_pagina.php");
+                    
+                }
+               
+                
+                
+            
                 
             } else
             {
