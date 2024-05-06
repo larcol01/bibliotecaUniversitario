@@ -116,7 +116,7 @@ and open the template in the editor.
                     <?php
                 }
 //ROL VENDEDOR (ADMIN)
-//OPCION CAMBIAR ESTADOS
+//OPCION CAMBIAR EL ESTADO DE COMO ESTA LOS LIBROS ES DECIR SI ESTAN DISPONIBLES O ESTAN prestados
                 /* Si el boton pulsado es ver solicitudes entra */
                 if ($_SESSION['opcionMenu'] == 'LibrosPrestados') { 
                     echo "<h1>GESTION DE LIBROS PRESTADOS</h1><hr>";
