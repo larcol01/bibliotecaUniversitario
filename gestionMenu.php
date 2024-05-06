@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -7,19 +8,20 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>GestionMenu</title>
+        <title>Gestión</title>
+
     </head>
     <body>
-         <?php
+
+        <?php
         /* Iniciamos la sesion */
         session_start();
-
-        /* aqui incluyo la base de datos que antes e hecho la conexion en otra clase */
+ /* aqui incluyo la base de datos que antes e hecho la conexion en otra clase */
         include 'conexion.php';
 
         // Obtenemos la conexión utilizando la función getConn() ( que hemos definido en el php de conexion a la BD)
         $conexion =  getConnexion();
-        
+
         /* SI HAY UN USUARIO LOGEADO ENTRA */
         if (isset($_SESSION['usuario']) && isset($_SESSION['rol']) == 'administrador') {
 
@@ -33,10 +35,10 @@ and open the template in the editor.
             /* Este if evalua que se haya seleccionado algo en el menu, si es que si entra */
             if (isset($_SESSION['opcionMenu'])) {
 
-//ROL ADMINISTRADOR
+//ROL VENDEDOR (ADMIN)
 //OPCION VER SOLICITUDES
                 /* Si el boton pulsado es ver solicitudes entra */
-                if ($_SESSION['opcionMenu'] == 'VerSolicitudes') {
+                if ($_SESSION['opcionMenu'] == 'VerSolicitudes') { 
                     echo "<h1>GESTION DE SOLICITUDES</h1><hr>";
 
                     /* Se compreba que se haya pulsado el boton de cambiar */
@@ -45,28 +47,33 @@ and open the template in the editor.
                         if (isset($_POST['opciones'])) {
                             /* Recojemos las opciones */
                             $opciones_seleccionadas = $_POST['opciones'];
+                            $cambiarRol =$_POST['cambiarRol'];
 
                             /* Recorremos todas las opciones selecionadas */
                             foreach ($opciones_seleccionadas as $opcion) {
+                                
+                                    
+                                
+                               
                                 // $opcion contiene el valor (ID) del checkbox seleccionado
                                 /* Actualizamos con update el rol a comprador selecionado el id del usuario */
 
-                                $consulta = " UPDATE usuario SET rol='comprador' WHERE id_usuario='$opcion';";
+                                $consulta = " UPDATE usuario SET tipo_rol='alumno' WHERE id_usuario='$opcion';";
                                 $consulta = mysqli_query($conexion, $consulta)
-                                        or die("Fallo en la consulta");
+                                        or die("Fallo en la consulta cambiar rol");
 
                                 /* Actualizamos tambien la propia tabla de solicitudes */
                                 $consulta = " UPDATE solicitudes SET estado='confirmado' WHERE id_usuario='$opcion';";
                                 $consulta = mysqli_query($conexion, $consulta)
-                                        or die("Fallo en la consulta");
+                                        or die("Fallo en la consulta estado");
 
                                 /* Obtenemos la fecha actual para introducicirla en la tabla solicitudes y que se registre la fecha del momento */
                                 $fecha_actual = date("Y-m-d");
 
                                 /* Introducimos la fecha del momento de confirmacion, utilizando como antes el id del usuario correspondiente */
-                                $consulta = " UPDATE solicitudes SET fecha_aprobacion = '$fecha_actual' WHERE id_usuario = '$opcion'";
+                                /*$consulta = " UPDATE solicitudes SET fecha_aprobacion = '$fecha_actual' WHERE id_usuario = '$opcion'";
                                 $consulta = mysqli_query($conexion, $consulta)
-                                        or die("Fallo en la consulta");
+                                        or die("Fallo en la consulta fecha");*/
                             }
                         } else {
                             // Si no se seleccionaron opciones
@@ -108,7 +115,7 @@ and open the template in the editor.
                     </form>
                     <?php
                 }
-//ROL ADMINISTRADOR
+//ROL VENDEDOR (ADMIN)
 //OPCION CAMBIAR ESTADOS
                 /* Si el boton que se pulsa en le menu es cambiar estados (vendedor), entra en el  if */
                 if ($_SESSION['opcionMenu'] == 'CambiarEstados') {
@@ -229,30 +236,32 @@ and open the template in the editor.
                     }
                 }
 
-//ROL VENDEDOR (ADMIN)
+//ROL ADMINISTRADO
 //OPCION INSERTAR NUEVO LIBRO
+//aqui se insertan lo nuevos libros que quiere meter el administrador
 
                 if ($_SESSION['opcionMenu'] == 'InsertarLibro') {
                     echo "<h1>AÑADIR NUEVO TÍTULO</h1>";
                     /* Compruebo que se ha enviado el formulario */
                     if (isset($_REQUEST['insertar'])) {
                         /* Verifica que los datos se han recibido correctamente, si no es así se le indica al usuario */
-                        if (isset($_REQUEST['isbn']) && isset($_REQUEST['titulo']) && isset($_REQUEST['autor']) && isset($_REQUEST['editorial']) && isset($_REQUEST['precio'])) {
+                        if (isset($_REQUEST['isbn']) && isset($_REQUEST['titulo']) && isset($_REQUEST['idioma']) && isset($_REQUEST['autor']) && isset($_REQUEST['nEjemplares'])&& isset($_REQUEST['ano'])
+                                && isset($_REQUEST['estado']) && isset($_REQUEST['tema']) && isset($_REQUEST['editorial'])) {
                             
                             
                             /*Se obtiene la información del título enviado y se guarda en una variable*/
                             $tituloAComprobar = $_REQUEST['titulo'];
                             /* Realizo una consulta buscando coincidencias con el titulo */
-                            $consulta = "SELECT * FROM libro WHERE titulo = '" . $tituloAComprobar . "';";
+                            $consulta = "SELECT * FROM libros WHERE titulo = '" . $tituloAComprobar . "';";
                             $consulta = mysqli_query($conexion, $consulta)
                                     or die("Fallo en la consulta");
                             /* Si no hay coincidencias en la consulta procede a insertar el nuevo libro en la tabla
                              * Si por el contrario sí hay, informa al usuario con un mensaje */
                             if (mysqli_num_rows($consulta) == 0) {
 
-                                $consulta = "INSERT INTO libro(isbn, titulo, autor, editorial, precio) "
-                                        . "VALUES ('" . $_REQUEST['isbn'] . "','" . $_REQUEST['titulo'] . "', '" . $_REQUEST['autor']
-                                        . "','" . $_REQUEST['editorial'] . "','" . $_REQUEST['precio'] . "')";
+                                $consulta = "INSERT INTO libros(isbn, titulo,idioma, nombre_autor, num_ejemplares, año, estado, tema, nombre_editorial) "
+                                        . "VALUES ('" . $_REQUEST['isbn'] . "','" . $_REQUEST['titulo']. "','" . $_REQUEST['idioma'] . "', '" . $_REQUEST['autor'] . "','" . $_REQUEST['nEjemplares']
+                                        . "','" . $_REQUEST['ano'] . "','" . $_REQUEST['estado']. "','" . $_REQUEST['tema'] . "','" . $_REQUEST['editorial'] . "')";
                                 $consulta = mysqli_query($conexion, $consulta)
                                         or die("Fallo en la consulta");
 
@@ -278,21 +287,43 @@ and open the template in the editor.
                             <br>
                             <input type="text" name="titulo" value="" required/>
                             <br><br>
-
+                            
+                            Idioma:
+                            <br>
+                            <input type="text" name="idioma" value="" required/>
+                            <br><br>
+                            
                             Autor:
                             <br>
                             <input type="text" name="autor" value="" required/>
                             <br><br>
 
+                            
+                            Numero de ejemplares:
+                            <br>
+                            <input type="text" name="nEjemplares" value="" required/>
+                            <br><br>
+                            
+                            Año:
+                            <br>
+                            <input type="text" name="ano" value="" required/>
+                            <br><br>
+                            
+                            Estado:
+                            <br>
+                            <input type="text" name="estado" value="" required/>
+                            <br><br>
+                            
+                            Tema:
+                            <br>
+                            <input type="text" name="tema" value="" required/>
+                            <br><br>
                             Editorial:
                             <br>
                             <input type="text" name="editorial" value="" required/>
                             <br><br>
 
-                            Precio:
-                            <br>
-                            <input type="number" name="precio" step="0.01" min="0" placeholder="0.00" value="" required/>
-                            <br><br>
+                           
 
                             <input type="submit" name="insertar" value="Insertar"> 
                         </form>

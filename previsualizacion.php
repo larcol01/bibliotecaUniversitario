@@ -209,7 +209,7 @@ session_start();
             <hr>
             <form name="form" action="login.php" method="POST">
 
-                <input type="submit" name="salir" value="Salir" />
+                <input type="submit" name="salir" value="Salir"  class="boton_salir"/>
 
             </form><br>
 
