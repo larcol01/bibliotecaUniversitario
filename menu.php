@@ -162,7 +162,7 @@ session_start();
 
                     
                     <label for="nuevosLibros">Mostrar libros prestados</label><br><br>
-                    <input type="submit" value="Libros Prestados" name="enviar" /><br><br>
+                    <input type="submit" value="LibrosPrestados" name="enviar" /><br><br>
                     
 
 
@@ -174,7 +174,7 @@ session_start();
                     <input type="submit" value="Pedir" name="enviar" /><br><br>
                     
                      <label for="nuevosLibros">Añadir libros</label><br><br>
-                    <input type="submit" value="InsertarLibr" name="enviar" /><br><br>
+                    <input type="submit" value="InsertarLibro" name="enviar" /><br><br>
 
                     <label for="devolver">Devolver libros</label><br><br>
                     <input type="submit" value="Devolver Libros" name="enviar" /><br><br>

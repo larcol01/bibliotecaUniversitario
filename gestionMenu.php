@@ -117,123 +117,77 @@ and open the template in the editor.
                 }
 //ROL VENDEDOR (ADMIN)
 //OPCION CAMBIAR ESTADOS
-                /* Si el boton que se pulsa en le menu es cambiar estados (vendedor), entra en el  if */
-                if ($_SESSION['opcionMenu'] == 'CambiarEstados') {
+                /* Si el boton pulsado es ver solicitudes entra */
+                if ($_SESSION['opcionMenu'] == 'LibrosPrestados') { 
+                    echo "<h1>GESTION DE LIBROS PRESTADOS</h1><hr>";
 
-                    echo "<h1>Cambiar estados de los pedidos</h1><hr>";
-                    /* Aqui le mostramos los pedidos que tiene y en que estados estan para que pueda cambiarlos */
+                    /* Se compreba que se haya pulsado el boton de cambiar */
+                    if (isset($_REQUEST['cambiar'])) {
+                        /* Comprobamos que se haya selecionado algo en caso de que si entra en el if */
+                        if (isset($_POST['opciones'])) {
+                            /* Recojemos las opciones */
+                            $opciones_seleccionadas = $_POST['opciones'];
+                            
+                            /* Recorremos todas las opciones selecionadas */
+                            foreach ($opciones_seleccionadas as $opcion) {
+                                
+                                    
+                                
+                               
+                                // $opcion contiene el valor (ID) del checkbox seleccionado
+                                /* Actualizamos con update el rol a comprador selecionado el id del usuario */
+
+                                $consulta = " UPDATE libros SET estado='disponible' WHERE estado='prestados';";
+                                $consulta = mysqli_query($conexion, $consulta)
+                                        or die("Fallo en la consulta cambiar rol");
+
+                               
+                            }
+                        } else {
+                            // Si no se seleccionaron opciones
+                            echo "No se han seleccionado opciones.";
+                        }
+                    }
+
+                    /* Realizamos un select para que el vendedor pueda ver todos los usuarios que han solicitado el cambio de rol */
+                    $consulta = " select * from libros WHERE estado='prestados';";
+                    $consulta = mysqli_query($conexion, $consulta)
+                            or die("Fallo en la consulta");
                     ?>
 
                     <form action="gestionMenu.php" method="POST">
 
-                        <label for="opcion">Filtrar por estado:</label>
-                        <select name="opcion" id="opcion">
-                            <option value="procesado">Procesado</option>
-                            <option value="enviado">Enviado</option>
-                            <option value="reparto">En Reparto</option>
-                            <option value="entregado">Entregado</option>
-                            <option value="todos">Ver todos</option>
-                        </select>
-                        <input type="submit" value="Consultar" name="seleccion">
+                        <?php
+                        /* Consulta si hay usuarios pendientes */
+                        if (mysqli_num_rows($consulta) > 0) {
+                            while ($row = mysqli_fetch_assoc($consulta)) {
+                                /* Guardo en las variables cada dato de la tabla */
+                                $isbn = $row['isbn'];
+                                $titulo = $row['titulo'];
+                                $idioma = $row['idioma'];
+                                $nombre_autor = $row['nombre_autor'];
+                                $num_ejemplares = $row['num_ejemplares'];
+                                $año = $row['año'];
+                                $estado = $row['estado'];
+                                $tema = $row['tema'];
+                                $nombre_editorial = $row['nombre_editorial'];
+
+                                /* Muestra el ID en el valor del checkbox y los demás campos como texto en una etiqueta <label> */
+                                echo "<input type='checkbox' name='opciones[]' value='$nombre_opcion'> 
+                                <label>ISBN: $isbn, Titulo: $titulo, Idioma: $idioma, Nombre Autor: $nombre_autor, Numero Ejemplares: $num_ejemplares, Año: $año, 
+                                         Estado: $estado, Tema: $tema, Nombre Editorial: $nombre_editorial</label> <br>";
+                            }
+                        } else {
+                            /* Mensaje de que no hay ningun registro que sea acorde a la consulta */
+                            echo "No hay opciones disponibles.";
+                        }
+                        ?>
+
+                        <br><br>
+                        <input type="submit" value="cambiar" name="cambiar" />
 
                     </form>
-
-                    <br><br>
                     <?php
-                    /* Solo entra en este if si el vendedor ha pulsado para confirmar el cambio de estado, de esta manera al estar primero, la tabla que
-                      aparecera despues estara actualizada, de otra forma, el cambio no iria en concordandia con el momento, el and nos sirve para asegurarnos de
-                     * que siempre hay una opcion seleccionada en el radio button */
-                    if (isset($_REQUEST['cambiarEstado']) && isset($_REQUEST['selectCambio'])) {
-                        /* Consulta de actualizacion, modificamos el estado de pedido con la opcion marcada por el vendedro, indicandole con la clausula wher correspondiete al id
-                          de pedido que recogemos gracias al value del radio button indicado */
-                        $consulta = "UPDATE pedido SET estadoPedido='" . $_REQUEST['opcion'] . "' WHERE id_pedido = " . $_REQUEST['selectCambio'];
-                        $consulta = mysqli_query($conexion, $consulta)
-                                or die("Fallo en la consulta");
-                    }
-
-                    /* Entra en el if si se ha pulsado cualquiera de los dos botones para sacar la tabla, ya que en inicio hasta que no se pulsa no aparece la tabla */
-                    if (isset($_REQUEST['seleccion']) || isset($_REQUEST['cambiarEstado'])) {
-                        ?>
-                        <form action="gestionMenu.php" method="POST">
-                            <?php
-                            /* Recojo la opcion que quiere cambiar el admin */
-                            $estadoSelecionado = $_POST['opcion'];
-
-                            /* Si el usuario quiere ver todos los pedidos independientemente del estado entra en el if y se realiza una cosnulta sin WHERE */
-                            if ($estadoSelecionado == 'todos') {
-                                $consulta = "SELECT pedido.id_usuario, pedido.id_pedido, pedido.estadoPedido AS Estado, pedido.facturado AS TOTAL, 
-                                     SUM(detallePedido.cantidad) AS Articulos FROM pedido
-                                     INNER JOIN detallePedido ON pedido.id_pedido = detallePedido.id_pedido
-                                     GROUP BY pedido.id_usuario, pedido.id_pedido, pedido.estadoPedido, pedido.facturado;";
-                            } else {
-                                /* Realizamos la consulta conforme al estado selecionado para que nos devuelva id de pedido, el estado del mismo, asi como el total del precio y la cantidad
-                                  de articulos totales que contiene el pedido */
-                                $consulta = "SELECT pedido.id_usuario, pedido.id_pedido, pedido.estadoPedido AS Estado, pedido.facturado AS TOTAL, 
-                                     SUM(detallePedido.cantidad) AS Articulos FROM pedido
-                                     INNER JOIN detallePedido ON pedido.id_pedido = detallePedido.id_pedido
-                                     WHERE pedido.estadoPedido = '$estadoSelecionado'GROUP BY pedido.id_usuario, pedido.id_pedido, pedido.estadoPedido, pedido.facturado;";
-                            }
-
-
-                            $consulta = mysqli_query($conexion, $consulta)
-                                    or die("Fallo en la consulta");
-
-
-                            /* Comprobamos si hay resultados */
-                            if (mysqli_num_rows($consulta) > 0) {
-                                /* Sacamos la tabla por pantalla */
-                                echo "<table>";
-                                echo "<tr>";
-
-                                echo "<th>ID USUARIO</th>";
-                                echo "<th>ID PEDIDO</th>";
-                                echo "<th>ESTADO PEDIDO</th>";
-                                echo "<th>COSTE</th>";
-                                echo "<th>TOTAL ARTICULOS</th>";
-                                echo "<th></th>";
-
-                                echo "</tr>";
-
-                                /* Recorre el resultado de la consulta realizada */
-                                while ($row = mysqli_fetch_assoc($consulta)) {
-
-                                    echo "<tr>";
-                                    echo "<td>" . $row['id_usuario'] . "</td>";
-                                    echo "<td>" . $row['id_pedido'] . "</td>";
-                                    echo "<td>" . $row['Estado'] . "</td>";
-                                    echo "<td>" . $row['TOTAL'] . "</td>";
-                                    echo "<td>" . $row['Articulos'] . "</td>";
-
-                                    /* Pasamos mediante el value del radio button el id pedido que corresponde con ese registro, para modificar solo el correcto */
-                                    echo "<td><input type='radio' name='selectCambio' value='" . $row['id_pedido'] . "'/></td>";
-                                    echo "</tr>";
-                                }
-
-                                echo "</table>";
-                                echo "<br><br><br>";
-                            } else {
-                                echo "No hay opciones disponibles.<br><br><br>";
-                            }
-                            ?>
-
-                            <!-- Usamos otro selecto para elegit a que estado queremos cambiar el pedido, el primer select solo es para filtrar -->
-                            <label for="opcion">Cambiar a:</label>
-                            <select name="opcion" id="opcion">
-                                <option value="procesado">Procesado</option>
-                                <option value="enviado">Enviado</option>
-                                <option value="reparto">En Reparto</option>
-                                <option value="entregado">Entregado</option>
-                            </select>
-                            <input type="submit" name="cambiarEstado" value="Cambiar estado"> 
-                        </form>
-                        <?php
-                        echo "<br>";
-
-                        /* Si el usuario no ha marcado nada y pulsa el boton entra en el if y sale el mensaje correspondiente */
-                        if (isset($_REQUEST['cambiarEstado']) && !isset($_REQUEST['selectCambio'])) {
-                            echo 'No has selecionado nada';
-                        }
-                    }
                 }
 
 //ROL ADMINISTRADO
