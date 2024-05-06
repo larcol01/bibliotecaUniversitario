@@ -157,8 +157,8 @@ session_start();
                     <input type="submit" value="InsertarLibro" name="enviar" /><br><br>
                         
                     
-                    <label for="estados">Elimina libros</label><br><br>
-                    <input type="submit" value="Eliminar libros" name="enviar" /><br><br>
+                    <label for="eliminarLibros">Elimina libros</label><br><br>
+                    <input type="submit" value="EliminarLibros" name="enviar" /><br><br>
 
                     
                     <label for="nuevosLibros">Mostrar libros prestados</label><br><br>
@@ -173,10 +173,10 @@ session_start();
                     <label for="solicitudes">Accede al catálogo y pedir</label><br><br>
                     <input type="submit" value="Pedir" name="enviar" /><br><br>
                     
-                     <label for="solicitudes">Añadir libros</label><br><br>
-                    <input type="submit" value="Añadir Libros" name="enviar" /><br><br>
+                     <label for="nuevosLibros">Añadir libros</label><br><br>
+                    <input type="submit" value="InsertarLibr" name="enviar" /><br><br>
 
-                    <label for="solicitudes">Devolver libros</label><br><br>
+                    <label for="devolver">Devolver libros</label><br><br>
                     <input type="submit" value="Devolver Libros" name="enviar" /><br><br>
 
                     <?php
@@ -189,7 +189,7 @@ session_start();
                     <label for="solicitudes">Accede al catálogo y pedir</label><br><br>
                     <input type="submit" value="Pedir" name="enviar" /><br><br>
 
-                    <label for="solicitudes">Devolver libros</label><br><br>
+                    <label for="devolver">Devolver libros</label><br><br>
                     <input type="submit" value="DevolverLibros" name="enviar" /><br><br>
 
                     <?php
@@ -202,7 +202,7 @@ session_start();
                     <label for="solicitudes">Accede al catálogo y pedir</label><br><br>
                     <input type="submit" value="Pedir" name="enviar" /><br><br>
 
-                    <label for="solicitudes">Devolver libros</label><br><br>
+                    <label for="devolver">Devolver libros</label><br><br>
                     <input type="submit" value="DevolverLibros" name="enviar" /><br><br>
 
                     <?php
@@ -216,7 +216,7 @@ session_start();
                    <label for="solicitudes">Accede al catálogo y pedir</label><br><br>
                     <input type="submit" value="Pedir" name="enviar" /><br><br>
 
-                    <label for="solicitudes">Devolver libros</label><br><br>
+                    <label for="devolver">Devolver libros</label><br><br>
                     <input type="submit" value="DevolverLibros" name="enviar" /><br><br>
 
                     <?php

@@ -331,7 +331,107 @@ and open the template in the editor.
                         <?php
                     }
                 }
+               
+//ROL ADMINISTRADO
+//OPCION ELIMINAR LIBRO
+//aqui se eliminan los libros que ya estan registrados en la base de datos
+                  if ($_SESSION['opcionMenu'] == 'EliminarLibros') {
+                       echo "<h1>ELIMINAR TÍTULO</h1>";
+                    /* Compruebo que se ha enviado el formulario */
+                    if (isset($_REQUEST['eliminar'])) {
+                        
+                    
+  
+                        /* Verifica que los datos se han recibido correctamente, si no es así se le indica al usuario */
+                        if (isset($_REQUEST['isbn']) && isset($_REQUEST['titulo']) && isset($_REQUEST['idioma']) && isset($_REQUEST['autor']) && isset($_REQUEST['nEjemplares'])&& isset($_REQUEST['ano'])
+                                && isset($_REQUEST['estado']) && isset($_REQUEST['tema']) && isset($_REQUEST['editorial'])) {
+                            
+                            
+                            /*Se obtiene la información del título enviado y se guarda en una variable*/
+                            $tituloAComprobar = $_REQUEST['titulo'];
+                            /* Realizo una consulta buscando coincidencias con el titulo */
+                            $consulta = "SELECT * FROM libros WHERE titulo = '" . $tituloAComprobar . "';";
+                            $consulta = mysqli_query($conexion, $consulta)
+                                    or die("Fallo en la consulta buscar titulo");
+                            /* Si no hay coincidencias en la consulta procede a insertar el nuevo libro en la tabla
+                             * Si por el contrario sí hay, informa al usuario con un mensaje */
+                            if (mysqli_num_rows($consulta) == 1) {
 
+                                $consulta = "DELETE FROM libros WHERE isbn= '$_REQUEST[isbn]'";
+                                        
+                                $consulta = mysqli_query($conexion, $consulta)
+                                        or die("Fallo en la consulta eliminar");
+
+                                print "Se ha eliminado el libro con éxito";
+                            } else {
+                                print "No se ha encontrado ningun libro con esa informacion";
+                            }
+                        } else {
+                            print 'No se ha podido eliminar el libro. Revisa los datos.';
+                        }
+                    } else {
+                        ?>
+                        <form action="gestionMenu.php" method="POST">
+                            <hr>
+                            <h3>Introduce los datos del libro</h3>
+                            <br>
+                            ISBN:
+                            <br>
+                            <input type="number" name="isbn" min="0" value="" required/>
+                            <br><br>
+
+                            Título:
+                            <br>
+                            <input type="text" name="titulo" value="" required/>
+                            <br><br>
+                            
+                            Idioma:
+                            <br>
+                            <input type="text" name="idioma" value="" required/>
+                            <br><br>
+                            
+                            Autor:
+                            <br>
+                            <input type="text" name="autor" value="" required/>
+                            <br><br>
+
+                            
+                            Numero de ejemplares:
+                            <br>
+                            <input type="text" name="nEjemplares" value="" required/>
+                            <br><br>
+                            
+                            Año:
+                            <br>
+                            <input type="text" name="ano" value="" required/>
+                            <br><br>
+                            
+                            Estado:
+                            <br>
+                            <input type="text" name="estado" value="" required/>
+                            <br><br>
+                            
+                            Tema:
+                            <br>
+                            <input type="text" name="tema" value="" required/>
+                            <br><br>
+                            Editorial:
+                            <br>
+                            <input type="text" name="editorial" value="" required/>
+                            <br><br>
+
+                           
+
+                            <input type="submit" name="eliminar" value="Eliminar"> 
+                        </form>
+
+                        <?php
+                    }
+                      
+                  }
+                
+                
+                
 //ROL COMPRADOR
 //OPCION COMPRAR
                 /* Si el boton que se pulsa en el menu es comprar (por parte del comprador), entra en el if */
