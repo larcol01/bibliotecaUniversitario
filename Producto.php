@@ -3,14 +3,24 @@
 
 class Producto
 {
-    /* Propiedades del objeto producto */
-    private $titulo;
-    private $precio;
+    /* Propiedades del objeto producto */ 
     private $cantidad;
+    private $isbn;
+    private $titulo;
+    private $idioma;
+    private $nombreAutor;
+    private $numeroEjemplares;
+    private $ano;
+    private $tema;
+    private $nombreEditorial;
+    
+    
+   
 
     /* Constructor */
-    public function __construct($isbn, $titulo, $idioma,$nombreAutor,$numeroEjemplares,$ano,$tema,$nombreEditorial, $cantidad)
-    {
+    public function _construct($cantidad, $isbn, $titulo, $idioma, $nombreAutor, $numeroEjemplares, $ano, $tema, $nombreEditorial)
+    {  
+        $this->cantidad = $cantidad;
         $this->isbn =$isbn;
         $this->titulo = $titulo;
         $this->idioma =$idioma;
@@ -19,7 +29,7 @@ class Producto
         $this->ano =$ano;
         $this->tema =$tema;
         $this->nombreEditorial =$nombreEditorial;
-        $this->cantidad = $cantidad;
+      
         
        
     }

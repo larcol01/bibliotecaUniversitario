@@ -115,7 +115,7 @@ and open the template in the editor.
                     </form>
                     <?php
                 }
-//ROL VENDEDOR (ADMIN)
+//ROL ADMINISTRADOR
 //OPCION CAMBIAR EL ESTADO DE COMO ESTA LOS LIBROS ES DECIR SI ESTAN DISPONIBLES O ESTAN prestados
                 /* Si el boton pulsado es ver solicitudes entra */
                 if ($_SESSION['opcionMenu'] == 'LibrosPrestados') { 
@@ -389,7 +389,7 @@ and open the template in the editor.
 //ROL COMPRADOR
 //OPCION COMPRAR
                 /* Si el boton que se pulsa en el menu es comprar (por parte del comprador), entra en el if */
-                if ($_SESSION['opcionMenu'] == 'Comprar') {
+                if ($_SESSION['opcionMenu'] == 'Pedir') {
                     /* Redirigimos a la página especificada, en este caso al catalogo */
                     header("Location: catalogo.php");
                     exit;
