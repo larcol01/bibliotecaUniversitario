@@ -9,23 +9,21 @@ class Producto
     private $titulo;
     private $idioma;
     private $nombreAutor;
-    private $numeroEjemplares;
     private $ano;
     private $tema;
     private $nombreEditorial;
     
     
-   
+
 
     /* Constructor */
-    public function _construct($cantidad, $isbn, $titulo, $idioma, $nombreAutor, $numeroEjemplares, $ano, $tema, $nombreEditorial)
+    public function _construct($cantidad, $isbn, $titulo, $idioma, $nombreAutor, $ano, $tema, $nombreEditorial)
     {  
         $this->cantidad = $cantidad;
         $this->isbn =$isbn;
         $this->titulo = $titulo;
         $this->idioma =$idioma;
         $this->nombreAutor =$nombreAutor;
-        $this->numeroEjemplares =$numeroEjemplares;
         $this->ano =$ano;
         $this->tema =$tema;
         $this->nombreEditorial =$nombreEditorial;
@@ -38,7 +36,7 @@ class Producto
 
     public function getIsbn()
     {
-        return $this->isbn =$isbn;
+        return $this->isbn;
     }
 
     public function setIsbn($isbn)
@@ -60,9 +58,10 @@ class Producto
     
     /* GET/ SET IDIOMA */
 
-    public function getIidioma()
+    public function getIdioma()
     {
-        return $this->idioma =$idioma;
+       
+        return $this->idioma ;
     }
 
     public function setIdioma($idioma)
@@ -75,31 +74,22 @@ class Producto
 
     public function getNombreAutor()
     {
-        return $this->nombreAutor =$nombreAutor;
+        /* @var $nombreAutor type */
+        return $this->nombreAutor ;
     }
 
     public function setNombreAutor($nombreAutor)
     {
-        $this->nombreAutor =$nombreAutor;
+        $this->nombreAutor =nombreAutor;
     }
 
-    /* GET/ SET NUMERO EJEMPLARES */
-
-    public function getNumEjemplares()
-    {
-        return $this->numeroEjemplares =$numeroEjemplares;
-    }
-
-    public function setNumEjemplares($numeroEjemplares)
-    {
-        $this->numeroEjemplares =$numeroEjemplares;
-    }
     
     /* GET/ SET AÑO */
 
     public function getAno()
     {
-        return  $this->ano =$ano;
+        /* @var $ano type */
+        return  $this->ano;
     }
 
     public function setAno($ano)
@@ -111,7 +101,8 @@ class Producto
 
     public function getTema()
     {
-        return $this->tema =$tema;
+        /* @var $tema type */
+        return $this->tema ;
     }
 
     public function setTema($tema)
@@ -123,10 +114,12 @@ class Producto
 
     public function getNombreEditorial()
     {
-        return $this->nombreEditorial =$nombreEditorial;
+        
+        /* @var $nombreEditorial type */
+        return $this->nombreEditorial;
     }
 
-    public function setNombreEditorial($tmea)
+    public function setNombreEditorial($nombreEditorial)
     {
        $this->nombreEditorial =$nombreEditorial;
     }
@@ -144,4 +137,3 @@ class Producto
     }
 
 }
-?>
