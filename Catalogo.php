@@ -14,8 +14,15 @@ function imprimirCestaBorrar($cesta) {
     <form name="borrar" action="catalogo.php" method="POST">
         <table>
             <tr>
+               <!-- <th>ISBN</th>-->
+                <th>ISBN</th>
                 <th>Título</th>
-               
+                <th>Idioma</th>
+                <th>nombre Autor</th>
+                <th>Año</th>
+                <th>Tema</th>
+                <th>Nombre Editorial</th>
+                
                 <th>Cantidad</th>
                 <th>Eliminar</th>
             </tr>
@@ -23,11 +30,16 @@ function imprimirCestaBorrar($cesta) {
 
             <?php
             foreach ($cesta->getProductos() as $producto) {
-
-                echo "<tr><td>" . $producto->getTitulo() . "</td>"; //name="borrado[' . $producto->getTitulo() . ']"
                
-                echo "<td>" . $producto->getCantidad() . "</td>";
-                echo '<td class="checkbox"><input type="checkbox" id="miCheckbox" name="borrado[' . $producto->getTitulo() . ']" value="' . htmlspecialchars($producto->getTitulo()) . '"/></td></tr>';
+                echo "<tr><td> Isbn " . $producto -> getIsbn() . "</td>"; //name="borrado[' . $producto->getTitulo() . ']"
+               echo "<td>Titulo "  . $producto -> getTitulo(). "</td>";
+                echo "<td>Idioma "  . $producto -> getIdioma() . "</td>";
+                echo "<td>NombreAutor "  . $producto -> getNombreAutor(). "</td>";
+                echo "<td>Ano"  . $producto -> getAno(). "</td>";
+                echo "<td>Tema "  . $producto -> getTema(). "</td>";
+                echo "<td>NombreEditorial"  . $producto -> getNombreEditorial(). "</td>";
+                echo "<td> Cantidad" . $producto->getCantidad() . "</td>";
+                echo '<td class="checkbox"><input type="checkbox" id="miCheckbox" name="borrado[' . $producto -> getTitulo() . ']" value="' . htmlspecialchars( $producto -> getTitulo()) . '"/></td></tr>';
             }
 
             //Lo pongo aqui o lo gestiono mas abajo
@@ -160,12 +172,22 @@ function imprimirCestaBorrar($cesta) {
 
                     <?php
                     while ($row = mysqli_fetch_assoc($consulta)) {
+                              $isbns = $row['isbn'];
+                              $titulos= $row['titulo'];
+                              $idiomas = $row['idioma'];
+                              $nombre_autores= $row ['nombre_autor'];
+                              $ano = $row['año'];
+                              $temas= $row['tema'];
+                              $nombre_editoriales =  $row['nombre_editorial'];
+                              
+                              
                         ?>
 
                         <tr>
                             <td> 
                                 <input type='number' name='cantidad[<?php echo $row['isbn'] . " | " . $row['titulo'] . " | " .$row['idioma'] . " | " .
-                                        $row ['nombre_autor']." | "  . $row['año'] ." | "  . $row['tema']." | "  . $row['nombre_editorial'] ?>]' value='0' id= 'input'>
+                                        $row ['nombre_autor']." | "  . $row['año'] ." | "  . $row['tema'] ." | "  . $row['nombre_editorial'] ?>]' value='0' id= 'input'>
+                                
                             </td>
                             <td><?php echo $row['isbn'] ?></td>
                             <td><?php echo $row['titulo'] ?></td>
@@ -207,29 +229,29 @@ function imprimirCestaBorrar($cesta) {
                 foreach ($cantidades as $clave => $cantidad) {
                     /* Si la cantidad del libro es mayor que cero entra en el if y... */
                     if ($cantidad > 0) {
-                        /* Divido las claves del array pasado por el form con la funcion explode  para obetener las claves por separado, ya que esta,
-                          se encarga de dividir una cadena en subcadenas, le pasamos como primer argumento el delimitador en este caso | y el segundo
-                         * argumento es lo que queremos dividir, por lo tanto partesClaves se convierte ahora en un array de dos posiciones */
-                        $partesClaves = explode(" | ", $clave);
-
-                        /* Aqui indicamos que la primera posicion [0] del array creado al dividir la clave, corresponde al titulo del libro y la segunda posicion
-                          [1] correspondera al precio del libro, convierto el precio en float para despues realizar el sumatorio del factura  del comprador */
-                        $tituloDelLibro = $partesClaves[0];
-                        
+                      
+                        $isbnDelLibro = $isbns ;
+                        $tituloDelLibro = $titulos ;
+                        $idiomaDelLibro = $idiomas;
+                        $nombreAutor = $nombre_autores;
+                        $anoDelLibro = $ano;
+                        $temaDelLibro = $temas;
+                        $nombre_editorial = $nombre_editoriales;
 
 
                         /* Con esta solución lo que hariamos sería comprobar primero si en la cesta ya está
                          * guardado ese título, y si está lo que hará será modificar solo la cantidad */
                         $productoExistente = $cesta->buscarProductoPorTitulo($tituloDelLibro);
-
+                        
                         /* Verificar si el producto ya existe en la cesta */
                         if ($productoExistente) {
 
                             // Si el producto ya existe, actualizar la cantidad
                             $productoExistente->setCantidad($productoExistente->getCantidad() + $cantidad);
                         } else {
+                            
                             // Si el producto no existe, crear un nuevo producto y agregarlo a la cesta
-                            $producto = new Producto($tituloDelLibro, $cantidad);
+                            $producto  = new Producto($isbnDelLibro,$tituloDelLibro,$idiomaDelLibro, $nombreAutor,$nombreAutor,$anoDelLibro, $temaDelLibro,$nombre_editorial,$cantidad);
                             $cesta->agregarProducto($producto);
                         }
                     }
