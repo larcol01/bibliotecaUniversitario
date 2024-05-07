@@ -1,15 +1,107 @@
-<!DOCTYPE html>
-
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
         <title>Gestión</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+                text-align: center;
+            }
 
+            h1 {
+                margin-top: 50px;
+            }
+
+            h2 {
+                font-size: 20px;
+                margin-top: 20px;
+            }
+
+            h3 {
+                margin-top: 20px;
+                font-size: 24px;
+            }
+
+            .libros {
+                margin: 20px auto;
+                width: 300px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .usuarios, .pedidos {
+                margin: 20px auto;
+                width: 600px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .usuarios input[type="text"],
+            .usuarios input[type="password"],
+            .usuarios input[type="submit"],
+            .libros input[type="text"],
+            .libros input[type="password"],
+            .libros input[type="submit"],
+            .pedidos input[type="text"],
+            .pedidos input[type="password"],
+            .pedidos input[type="submit"]{
+                margin-top: 10px;
+                width: calc(100% - 20px);
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            
+            .usuarios input[type="text"]:focus,
+            .usuarios input[type="password"]:focus,
+            .usuarios input[type="submit"]:focus,
+            .libros input[type="text"]:focus,
+            .libros input[type="password"]:focus,
+            .libros input[type="submit"]:focus,
+            .pedidos input[type="text"]:focus,
+            .pedidos input[type="password"]:focus,
+            .pedidos input[type="submit"]:focus{
+                border-color: #801cbe; 
+                box-shadow: 0 0 5px #801cbe; 
+                outline: none;
+            }
+            
+            
+            
+            
+            .usuarios input[type="submit"],
+            .libros input[type="submit"],
+            .pedidos input[type="submit"]{
+                background-color: rgb(55, 58, 162);
+                color: white;
+                border: none;
+                cursor: pointer;
+                transition: background-color 0.3s, transform 0.2s;
+                box-shadow: 0 4px 6px #801cbe;
+            }
+
+            .usuarios input[type="submit"]:hover,
+            .libros input[type="submit"]:hover,
+            .pedidos input[type="submit"]:hover{
+                background-color: #801cbe;
+            }
+
+            .hr {
+                margin-top: 20px;
+                border: 0;
+                border-top: 1px solid #d9bbbb;
+            }
+
+        </style>
     </head>
     <body>
 
@@ -87,7 +179,7 @@ and open the template in the editor.
                             or die("Fallo en la consulta");
                     ?>
 
-                    <form action="gestionMenu.php" method="POST">
+                    <form class="usuarios" action="gestionMenu.php" method="POST">
 
                         <?php
                         /* Consulta si hay usuarios pendientes */
@@ -155,7 +247,7 @@ and open the template in the editor.
                             or die("Fallo en la consulta");
                     ?>
 
-                    <form action="gestionMenu.php" method="POST">
+                    <form class="usuarios" action="gestionMenu.php" method="POST">
 
                         <?php
                         /* Consulta si hay usuarios pendientes */
@@ -228,13 +320,13 @@ and open the template in the editor.
                         }
                     } else {
                         ?>
-                        <form action="gestionMenu.php" method="POST">
+                        <form class="libros" action="gestionMenu.php" method="POST">
                             <hr>
                             <h3>Introduce los datos del libro</h3>
                             <br>
                             ISBN:
                             <br>
-                            <input type="number" name="isbn" min="0" value="" required/>
+                            <input type="text" name="isbn" min="0" value="" required/>
                             <br><br>
 
                             Título:
@@ -325,13 +417,13 @@ and open the template in the editor.
                         }
                     } else {
                         ?>
-                        <form action="gestionMenu.php" method="POST">
+                        <form class="libros" action="gestionMenu.php" method="POST">
                             <hr>
                             <h3>Introduce los datos del libro</h3>
                             <br>
                             ISBN:
                             <br>
-                            <input type="number" name="isbn" min="0" value="" required/>
+                            <input type="text" name="isbn" min="0" value="" required/>
                             <br><br>
 
                             Título:
@@ -402,7 +494,7 @@ and open the template in the editor.
                     /* Aqui le mostramos los pedidos que tiene y en que estados estan */
                     ?>
 
-                    <br><form action="gestionMenu.php" method="POST">
+                    <br><form class="pedidos" action="gestionMenu.php" method="POST">
 
                         <label for="opcion">Selecciona el estado del pedido:</label>
                         <select name="opcion" id="opcion">

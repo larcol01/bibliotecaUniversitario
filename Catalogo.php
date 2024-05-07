@@ -14,7 +14,6 @@ function imprimirCestaBorrar($cesta) {
     <form name="borrar" action="catalogo.php" method="POST">
         <table>
             <tr>
-               <!-- <th>ISBN</th>-->
                 <th>ISBN</th>
                 <th>Título</th>
                 <th>Idioma</th>
@@ -39,7 +38,7 @@ function imprimirCestaBorrar($cesta) {
                 echo "<td>Tema "  . $producto -> getTema(). "</td>";
                 echo "<td>NombreEditorial"  . $producto -> getNombreEditorial(). "</td>";
                 echo "<td> Cantidad" . $producto->getCantidad() . "</td>";
-                echo '<td class="checkbox"><input type="checkbox" id="miCheckbox" name="borrado[' . $producto -> getTitulo() . ']" value="' . htmlspecialchars( $producto -> getTitulo()) . '"/></td></tr>';
+                echo '<td class="checkbox"><input class="boton" type="checkbox"  name="borrado[' . $producto -> getTitulo() . ']" value="' . htmlspecialchars( $producto -> getTitulo()) . '"/></td></tr>';
             }
 
             //Lo pongo aqui o lo gestiono mas abajo
@@ -48,13 +47,13 @@ function imprimirCestaBorrar($cesta) {
             ?>
         </table>
         <br>
-        <input type="submit" value="Eliminar" name="eliminar"/>
+        <input class="boton" type="submit" value="Eliminar" name="eliminar"/>
     </form><br>
 
     <!-- Botón para ir a la página de zona de pago -->
     <form action="zonaPago.php" method="GET">
 
-        <input type="submit" value="Ir a la zona de pago" />
+        <input class="boton_salir" type="submit" value="Ir a la zona de pago" />
 
     </form>
 
@@ -67,57 +66,100 @@ function imprimirCestaBorrar($cesta) {
         <title>Catálogo de Compra</title>
 
         <style>
-            * {
-                font-family: Helvetica, Verdana, sans-serif;
-                text-align: center;
-            }
+           body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 50px;
+        }
+        table {
 
-            input {
-                border-radius: 4px;
-            }
+            margin: 20px auto;
+            width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        caption{
+            font-size: 24px;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        th, td {
+            text-align: center;
+            padding: 8px;
+            border-bottom: 1px solid #ddd; 
+        }
+        th {
+            background-color: #693f82;
+            color: white;
+        }
+        
+       
+        tr:hover {
+            background-color: rgba(155, 12, 250, 0.13);
+        }
+        tbody tr td {
+            border-bottom-color: #801cbe; 
+        }
+        hr {
+            margin-top: 20px;
+            border: 0;
+            border-top: 1px solid #d9bbbb;
+        }
+        .boton{
+            background-color: rgb(55, 58, 162); 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 4px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: background-color 0.3s, transform 0.2s; 
+            box-shadow: 0 4px 6px #801cbe; 
+        }
+        .boton:hover {
+            background-color: #801cbe; 
+            transform: translateY(-2px); 
+        }
+        .boton:active{
+            background-color: rgb(55, 58, 162); 
+            transform: translateY(1px); 
+            box-shadow: none; 
+        }
 
-            input:hover {
-                background-color: lightskyblue;
-            }
-
-            table{
-                margin-left: auto;
-                margin-right: auto;
-                width: 80%;
-
-            }
-            tr
-            {
-                height: 40px
-            }
-
-            th {
-                background-color: lightskyblue;
-            }
-
-            td {
-                padding-left: 20px;
-                text-align: left;
-            }
-            table, tr, td,th
-            {
-                border: 2px solid;
-                border-collapse: collapse;
-
-            }
-
-            .checkbox {
-                text-align: center;
-            }
-
-            #input {
-
-                width: 40px;
-                height: 15px;
-                margin-left: 10px;
-            }
-
-
+        .boton_salir{
+            margin-bottom: 5%;
+            background-color: #801cbe; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 4px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: background-color 0.3s, transform 0.2s; 
+            box-shadow: 0 4px 6px rgb(55, 58, 162); 
+        }
+        .boton_salir:hover {
+            background-color: rgb(55, 58, 162); 
+            transform: translateY(-2px); 
+        }
+        .boton_salir:active{
+            background-color: #801cbe; 
+            transform: translateY(1px); 
+            box-shadow: none; 
+        }
+        table tr td input[type="number"]{
+            width: 60px;
+        }
         </style>
     </head>
     <body>
@@ -204,7 +246,7 @@ function imprimirCestaBorrar($cesta) {
                 </table>
 
                 <br>
-                <input type="submit" value="Añadir a la prestar" name="enviar" />
+                <input class="boton" type="submit" value="Añadir a la cesta" name="enviar" />
 
             </form>
 

@@ -102,31 +102,8 @@ session_start();
             transform: translateY(1px); 
             box-shadow: none; 
         }
-        .select_rol{
-            padding: 10px;
-            font-size: 16px; 
-            border: 2px solid rgb(55, 58, 162);
-            border-radius: 4px;
-            background-color: #fff; 
-            transition: border-color 0.3s;
-        }
-        .select_rol:hover{
-            border-color: #801cbe;
-        }
-        .select_rol option:checked {
-            background-color: rgb(55, 58, 162);
-            color: #fff;
-        }
-        .select_rol option {
-            padding: 8px;
-            background-color: #fff;
-            color: #333; 
-            transition: background-color 0.3s, color 0.3s; 
-        }
-        .select_rol option:hover {
-            background-color: #801cbe; 
-     
-        }
+       
+        
     </style>
 
     </head>
