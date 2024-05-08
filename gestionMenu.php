@@ -127,7 +127,7 @@
             /* Este if evalua que se haya seleccionado algo en el menu, si es que si entra */
             if (isset($_SESSION['opcionMenu'])) {
 
-//ROL VENDEDOR (ADMIN)
+//ROL ADMINISTRADOR
 //OPCION VER SOLICITUDES
                 /* Si el boton pulsado es ver solicitudes entra */
                 if ($_SESSION['opcionMenu'] == 'VerSolicitudes') { 
@@ -282,7 +282,7 @@
                     <?php
                 }
 
-//ROL ADMINISTRADO
+//ROL ADMINISTRADOR Y AUTOR
 //OPCION INSERTAR NUEVO LIBRO
 //aqui se insertan lo nuevos libros que quiere meter el administrador
 
@@ -378,7 +378,7 @@
                     }
                 }
                
-//ROL ADMINISTRADO
+//ROL ADMINISTRADO 
 //OPCION ELIMINAR LIBRO
 //aqui se eliminan los libros que ya estan registrados en la base de datos
                   if ($_SESSION['opcionMenu'] == 'EliminarLibros') {
@@ -478,91 +478,16 @@
                 
                 
                 
-//ROL COMPRADOR
-//OPCION COMPRAR
+//ROL TODOS LOS ROLES MENO ADMINISTRADOR
+//OPCION PEDIR
                 /* Si el boton que se pulsa en el menu es comprar (por parte del comprador), entra en el if */
                 if ($_SESSION['opcionMenu'] == 'Pedir') {
                     /* Redirigimos a la página especificada, en este caso al catalogo */
                     header("Location: catalogo.php");
                     exit;
                 }
-//ROL COMPRADOR
-//OPCION ESTADO PEDIDO
-                /* Si el boton que se pulsa en el menu es Estado pedido (comprador) entra en el if */
-                if ($_SESSION['opcionMenu'] == 'EstadoPedido') {
-                    echo "<h1>PEDIDOS REALIZADOS</h1><hr>";
-                    /* Aqui le mostramos los pedidos que tiene y en que estados estan */
-                    ?>
+//ROL TODOS LOS ROLES MENO ADMINISTRADOR
 
-                    <br><form class="pedidos" action="gestionMenu.php" method="POST">
-
-                        <label for="opcion">Selecciona el estado del pedido:</label>
-                        <select name="opcion" id="opcion">
-                            <option value="procesado">Procesado</option>
-                            <option value="enviado">Enviado</option>
-                            <option value="reparto">En Reparto</option>
-                            <option value="entregado">Entregado</option>
-                            <option value="todos">Ver todos</option>
-                        </select>
-                        <input type="submit" value="Enviar" name="seleccion">
-
-                    </form><br><br>
-                    <?php
-                    if (isset($_REQUEST['seleccion'])) {
-                        /* Recojo el id del usuario para utilizarlo en la select y sacar sus pedidos y el estado de pedido elegido */
-                        $id_usuario = $_SESSION['id_usuario'];
-                        $estadoSelecionado = $_POST['opcion'];
-
-
-                        /* Si el usuario seleciona la opcion de todos enrta en el if y vera todos los pedidos que tenga */
-                        if ($estadoSelecionado == 'todos') {
-                            $consulta = "SELECT pedido.id_pedido, pedido.estadoPedido AS Estado, pedido.facturado AS TOTAL, 
-                                     SUM(detallePedido.cantidad) AS Articulos FROM pedido
-                                     INNER JOIN detallePedido ON pedido.id_pedido = detallePedido.id_pedido
-                                     WHERE pedido.id_usuario =$id_usuario GROUP BY pedido.id_pedido, pedido.estadoPedido, pedido.facturado;";
-                        } else {
-                            /* Realizamos la consulta conforme al estado selecionado para que nos devuelva id de pedido, el estado del mismo, asi como el total del precio y la cantidad
-                              de articulos totales que contiene el pedido */
-                            $consulta = "SELECT pedido.id_pedido, pedido.estadoPedido AS Estado, pedido.facturado AS TOTAL, 
-                                     SUM(detallePedido.cantidad) AS Articulos FROM pedido
-                                     INNER JOIN detallePedido ON pedido.id_pedido = detallePedido.id_pedido
-                                     WHERE pedido.id_usuario =$id_usuario AND pedido.estadoPedido = '$estadoSelecionado'GROUP BY pedido.id_pedido, pedido.estadoPedido, pedido.facturado;";
-                        }
-
-
-                        $consulta = mysqli_query($conexion, $consulta)
-                                or die("Fallo en la consulta");
-
-
-                        /* Comprobamos si hay resultados */
-                        if (mysqli_num_rows($consulta) > 0) {
-                            /* Sacamos la tabla con todos los datos necesarios del pedido, estado etc... */
-                            echo "<table>";
-                            echo "<tr>";
-
-                            echo "<th>ID PEDIDO</th>";
-                            echo "<th>ESTADO PEDIDO</th>";
-                            echo "<th>COSTE</th>";
-                            echo "<th>TOTAL ARTICULOS</th>";
-
-                            echo "</tr>";
-
-                            /* Recorremos todos los registros que nos devuelve la consulta */
-                            while ($row = mysqli_fetch_assoc($consulta)) {
-                                echo "<tr>";
-                                echo "<td>" . $row['id_pedido'] . "</td>";
-                                echo "<td>" . $row['Estado'] . "</td>";
-                                echo "<td>" . $row['TOTAL'] . "</td>";
-                                echo "<td>" . $row['Articulos'] . "</td>";
-                                echo "</tr>";
-                            }
-
-                            echo "</table>";
-                        } else {
-                            echo "No hay opciones disponibles.";
-                        }
-                    }
-                }
             }
             //OPCION CAMBIAR EL ESTADO DE COMO ESTA LOS LIBROS ES DECIR SI ESTAN DISPONIBLES O ESTAN prestados
                 /* Si el boton pulsado es ver solicitudes entra */
