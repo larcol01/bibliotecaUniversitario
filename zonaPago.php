@@ -81,10 +81,12 @@ and open the template in the editor.
     </head>
     <body>
         <?php
+        //aqui inicializo la sesion
         session_start();
-
+        //aqui mira que tipo rol es el usuario
         if (isset($_SESSION['usuario']) && isset($_SESSION['rol']) == 'alumno' ||  isset($_SESSION['rol']) == 'profesor' ||  isset($_SESSION['rol']) == 'doctorado') {
 
+            //aqui incluyo la base de datos que antes e hecho la conexion en otra clase 
            include 'conexion.php';
 
             // Obtenemos la conexión utilizando la función getConn() ( que hemos definido en el php de conexion a la BD)
@@ -122,7 +124,7 @@ and open the template in the editor.
 
                     <?php
                     foreach ($cesta->getProductos() as $datosProducto) {
-
+                        //aqui saco la informacion y la saco por pantalla
                         echo "<br><br>";
                             echo "<tr><td> Isbn " . $datosProducto -> getIsbn() . "</td>"; //name="borrado[' . $producto->getTitulo() . ']"
                             echo "<td>Titulo "  . $datosProducto -> getTitulo(). "</td>";
@@ -158,12 +160,10 @@ and open the template in the editor.
             if (isset($_REQUEST['enviar'])) {
                 $sumatorio;
 
-                /* Obtengo el id del usuario que esta en la sesion */
-               // $id_usuario = $_SESSION['id_usuario'];
-               // $isbnDelosLibros =  $_REQUEST['isbn'];
-                
+               
+                //aqui se guarda en una variable el dia en el que se encuentra el usuario
                 $dia_presente =  date("Y-m-d");
-
+                //aqui se guarda en un variable el dia que tiene que devolver el libro
                 $dia_devolucion = date("Y-m-d +3") ;
                 
                 /* Realizo el insert en la BBDD registrando asi que el usuario a realizado un pago acorde con un pedido */
