@@ -9,54 +9,72 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title>Zona de Pago</title>
         <style>
-            * {
-                font-family: Helvetica, Verdana, sans-serif;
+             body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
                 text-align: center;
             }
-            
-            input {
-                border-radius: 4px;
+            h1 {
+                margin-top: 50px;
             }
-            
-            input:hover {
-                background-color: lightskyblue;
+            table {
+
+                margin: 20px auto;
+                width: 800px;
+                background-color: #fff;
+                padding: 10px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
 
-            table{
-                margin-left: auto;
-                margin-right: auto;
-                width: 80%;
 
+            th, td {
+                text-align: center;
+                padding: 8px;
+                border-bottom: 1px solid #ddd; 
             }
-            tr
-            {
-                height: 40px
-            }
-
             th {
-                background-color: lightskyblue;
+                background-color: #693f82;
+                color: white;
+            }
+            tr:nth-child(even) {
+                background-color: #9b0cfa21;
             }
 
-            td {
-                padding-left: 20px;
-                text-align: left;
+            tr:hover {
+                background-color: rgba(155, 12, 250, 0.13);
             }
-            table, tr, td,th
-            {
-                border: 2px solid;
-                border-collapse: collapse;
-
+             tr td {
+                border-bottom-color: #801cbe; 
             }
-
-            .checkbox {
-                text-align: center;
+            hr {
+                margin-top: 20px; 
+                border: 0;
+                border-top: 1px solid #d9bbbb;
             }
 
-            .total {
-                font-weight: bold;
-                background-color: lime;
+            .boton{
+                background-color: rgb(55, 58, 162); 
+                color: white; 
+                padding: 10px 20px; 
+                border: none; 
+                border-radius: 4px; 
+                font-size: 16px; 
+                cursor: pointer; 
+                transition: background-color 0.3s, transform 0.2s; 
+                box-shadow: 0 4px 6px #801cbe; 
             }
-
+            .boton:hover {
+                background-color: #801cbe; 
+                transform: translateY(-2px); 
+            }
+            .boton:active{
+                background-color: rgb(55, 58, 162); 
+                transform: translateY(1px); 
+                box-shadow: none; 
+            }
 
         </style>
 
@@ -129,7 +147,7 @@ and open the template in the editor.
 
                 <br>
 
-                <input type="submit" name="enviar" value="Pedir">
+                <input type="submit" name="enviar" value="Pedir" class="boton">
             </form>
         <br><br>
 
@@ -141,8 +159,8 @@ and open the template in the editor.
                 $sumatorio;
 
                 /* Obtengo el id del usuario que esta en la sesion */
-                $id_usuario = $_SESSION['id_usuario'];
-                $isbnDelosLibros =  $_REQUEST['isbn'];
+               // $id_usuario = $_SESSION['id_usuario'];
+               // $isbnDelosLibros =  $_REQUEST['isbn'];
                 
                 $dia_presente =  date("Y-m-d");
 

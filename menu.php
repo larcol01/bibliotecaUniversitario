@@ -177,7 +177,7 @@ session_start();
                     <input type="submit" value="InsertarLibro" name="enviar" /><br><br>
 
                     <label for="devolver">Devolver libros</label><br><br>
-                    <input type="submit" value="Devolver Libros" name="enviar" /><br><br>
+                    <input type="submit" value="DevolverLibros" name="enviar" /><br><br>
 
                     <?php
                 }

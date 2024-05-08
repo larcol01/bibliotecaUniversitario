@@ -564,7 +564,77 @@
                     }
                 }
             }
+            //OPCION CAMBIAR EL ESTADO DE COMO ESTA LOS LIBROS ES DECIR SI ESTAN DISPONIBLES O ESTAN prestados
+                /* Si el boton pulsado es ver solicitudes entra */
+                if ($_SESSION['opcionMenu'] == 'DevolverLibros') { 
+                    echo "<h1>DEVOLVER LIBROS</h1><hr>";
+
+                    /* Se compreba que se haya pulsado el boton de cambiar */
+                    if (isset($_REQUEST['cambiar'])) {
+                        /* Comprobamos que se haya selecionado algo en caso de que si entra en el if */
+                        if (isset($_POST['opciones'])) {
+                            /* Recojemos las opciones */
+                            $opciones_seleccionadas = $_POST['opciones'];
+                            
+                            /* Recorremos todas las opciones selecionadas */
+                            foreach ($opciones_seleccionadas as $opcion) {
+                                
+                               
+                                
+                               
+                                // $opcion contiene el valor (ID) del checkbox seleccionado
+                                /* Actualizamos con update el rol a comprador selecionado el id del usuario */
+
+                                $consulta = "  select * from prestamo";
+                                $consulta = mysqli_query($conexion, $consulta)
+                                        or die("Fallo en la consulta cambiar rol");
+                               
+                               
+                            }
+                        } else {
+                            // Si no se seleccionaron opciones
+                            echo "No se han seleccionado opciones.";
+                        }
+                    }
+
+                    /* Realizamos un select para que el vendedor pueda ver todos los usuarios que han solicitado el cambio de rol */
+                    $consulta = "SELECT * FROM `prestamo`;";
+                    $consulta = mysqli_query($conexion, $consulta)
+                            or die("Fallo en la consulta");
+                    ?>
+
+                    <form class="usuarios" action="gestionMenu.php" method="POST">
+
+                        <?php
+                        /* Consulta si hay usuarios pendientes */
+                        if (mysqli_num_rows($consulta) > 0) {
+                            while ($row = mysqli_fetch_assoc($consulta)) {
+                                /* Guardo en las variables cada dato de la tabla */
+                                $id_prestamo = $row['id_prestamo'];
+                                $fecha_prestamo = $row['fecha_prestamo'];
+                                $fecha_devolucion = $row['fecha_devolucion'];
+                                $isbn = $row['isbn'];
+                                $id_usuario = $row['id_usuario'];
+                                
+                                /* Muestra el ID en el valor del checkbox y los demás campos como texto en una etiqueta <label> */
+                                echo "<input type='checkbox' name='opciones[]' > 
+                                <label>ISBN: $isbn, Id_prestamo: $id_prestamo, Fecha_prestamo: $fecha_prestamo, Fecha_devolucion: $fecha_devolucion, Id_usuario: $id_usuario </label><br> <br>";
+                            }
+                        } else {
+                            /* Mensaje de que no hay ningun registro que sea acorde a la consulta */
+                            echo "No hay opciones disponibles.";
+                        }
+                        ?>
+
+                        <br><br>
+                        <input type="submit" value="cambiar" name="cambiar" />
+
+                    </form>
+                    <?php
+                }
             ?>
+                    
+                    
 
             <br><hr><hr>
             <a href="menu.php">Volver al Menu</a>
