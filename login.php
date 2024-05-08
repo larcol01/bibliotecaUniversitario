@@ -103,10 +103,10 @@ and open the template in the editor.
         
         
         
-        /* inicio sesion */
+        /*aqui iniciamos sesion  */
         session_start();
-
-        /* Si el usuario pulsa el boton de salir en el menu se elimina el usuario de la variable de sesion y se destruye la session */
+        
+        //aqui se comprueba si el usuario a pulsado el boton de salir en el menu se va a eliminar de la variable de sesion y a la vez se destruye la sesion que se ha creado antes
         if (isset($_REQUEST['salir']))
         {
             unset($_SESSION['usuario']);
@@ -114,24 +114,24 @@ and open the template in the editor.
             
         }
 
-        // Verificar si el formulario  de logeo ha sido enviado
+        //aqui comprobamos si el formulario de logeo se ha pulsado el boton y ha sido enviado
         if (isset($_POST['enviar']))
         {
-            echo "1fsdl";
-            // Recuperar los datos del formulario
+           // echo "1fsdl";
+           // Aqui se recogen los datos que se han introducido en el formulario para iniciar sesion 
+            
             $usuario_ingresado = $_POST['usuario'];
             $contrasena_ingresada = $_POST['contrasena'];
             
            /*Aqui incluyo la conexion a la base de datos que esta creado en otro php separado */
-       /* Inlcuimos la conexion a la BD */
         include 'conexion.php';
 
-        // Obtenemos la conexión utilizando la función getConn() (definida en el php de conexion a la BD)
+        // Obtenemos la conexión utilizando la función getConnexion() (definida en el php de conexion a la BD)
         $conexion =  getConnexion();
 
 
             /* Consulta SQL para verificar usuario y contraseña introducido */
-            //$consulta = "SELECT id_usuario,nombre,tipo_rol FROM usuario WHERE nombre = '$usuario_ingresado' AND contrasena = '$contrasena_ingresada'";
+          //aqui consultamos en la base de datos si el nombre y la contraseña que ha ingresado el usuario ya se encuentran registradas en la base de datos
 
             $consulta = mysqli_query($conexion,"SELECT id_usuario,nombre,tipo_rol FROM usuario WHERE nombre = '$usuario_ingresado' AND contrasena = '$contrasena_ingresada'")
                     or die("Fallo en la consulta");
@@ -139,14 +139,15 @@ and open the template in the editor.
             /* Sacamos la fila */
             $datosConsulta = mysqli_fetch_assoc($consulta);
 
- echo "2fsdl";
+        //echo "2fsdl";
             // Verificar si la consulta devuelve true porque hay resultados y son mas de 0 filas
            
                     $num_filas = mysqli_num_rows($consulta);
-                     echo "3fsdl";
+                    // echo "3fsdl";
             if ($num_filas > 0)
             {
-                echo "3fsdl";
+                
+               // echo "3fsdl";
                 /* Obtengo el rol (invitado,registrado....) de la consulta realizada */
                 $_SESSION['rol'] = $datosConsulta['tipo_rol'];
 
@@ -162,18 +163,20 @@ and open the template in the editor.
                 /* Si el usuario que se logea tiene como rol invitado, solo le redirigira a previsualizacion donde podra solo observar los productos */
                 if ($_SESSION['rol'] == 'invitado')
                 {
-                    echo "4fsdl";
+                   // echo "4fsdl";
                     // Redireccionar de inmediato
-                    
+                    //aqui nos lleva directamente a previsualizacion
                     header('Location: previsualizacion.php');
                 
                 exit;
                     //echo "5fsdl";header("refresh:5;url=otra_pagina.php");
                     
                 }
+                //apartir de aqui los tipos de roles se les manda directamente al menu
+                //y dependiendo del rol que tenga el usuario le aparecera un menu mas completo en el sentido con mas poder a la hora de introducir, eliminar, cambiar de rol...
                  if ($_SESSION['rol'] == 'alumno')
                 {
-                    echo "4fsdl";
+                    //echo "4fsdl";
                     // Redireccionar de inmediato
                     
                     header('Location: menu.php');
@@ -184,7 +187,7 @@ and open the template in the editor.
                 }
                 if ($_SESSION['rol'] == 'profesor')
                 {
-                    echo "4fsdl";
+                    //echo "4fsdl";
                     // Redireccionar de inmediato
                     
                     header('Location: menu.php');
@@ -196,7 +199,7 @@ and open the template in the editor.
                
                  if ($_SESSION['rol'] == 'autor')
                 {
-                    echo "4fsdl";
+                    //echo "4fsdl";
                     // Redireccionar de inmediato
                     
                     header('Location: menu.php');
@@ -207,7 +210,7 @@ and open the template in the editor.
                 }
                 if ($_SESSION['rol'] == 'doctorado')
                 {
-                    echo "4fsdl";
+                   // echo "4fsdl";
                     // Redireccionar de inmediato
                     
                     header('Location: menu.php');
@@ -218,7 +221,7 @@ and open the template in the editor.
                 }
                 if ($_SESSION['rol'] == 'administrador')
                 {
-                    echo "4fsdl";
+                   // echo "4fsdl";
                     // Redireccionar de inmediato
                     
                     header('Location: menu.php');
@@ -234,7 +237,7 @@ and open the template in the editor.
                 
             } else
             {
-                // Credenciales inválidas, mostrar mensaje de error
+                // Si lo que ha introducido el usuario en el login esta mal le aparece este mensaje
                 echo "Credenciales incorrectas. Por favor, inténtalo de nuevo.";
             }
 
