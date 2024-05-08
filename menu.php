@@ -115,9 +115,7 @@ session_start();
             /* Recojemos su nombre tambien, para mostrarle un mensaje personalizado */
             $nombreUsuario = $_SESSION['nombreUsuario'];
 
-            /* Por ultimo recojemos su id de usuario */
-            // $id_usuario = $_SESSION['id_usuario'];
-
+           
 
            /* aqui incluyo la base de datos que antes e hecho la conexion en otra clase */
             include 'conexion.php';
@@ -144,9 +142,11 @@ session_start();
                 -COMPRADOR: podra > comprar productos(poner y quitarlos de la cesta), cerrar pedido,ver estado de su compra(enviado...),ver historial de compras,¿pagar?
                 -INVITADO: podra > SOLO VER PRODUCTOS Y SOLICITAR CAMBIO-->
 
-                <!--A ESTE MENU SOLO PUEDEN LLEGAR EL COMPRADOR Y EL VENDEDOR, ya que al invitado se le redirige directamente a la unica pantalla que puede ver, en el mismo login -->
+                <!--A ESTE MENU SOLO PUEDEN LLEGAR EL ADMINISTRADOR, AUTOR, ALUMNO, PROFESOR Y DOCTORADO, ya que al invitado se le redirige directamente 
+                a la unica pantalla que puede ver, en el mismo login -->
 
                 <?php
+                //dependiendo del rol que tenga el usuario vera un menu diferente menos los usuario alumno, profesor, doctorado que tiene el mismo menu
                 if ($rol == 'administrador') {
                     ?>
                     <label for="solicitudes">Comprueba las solicitudes de tus clientes</label><br><br>
