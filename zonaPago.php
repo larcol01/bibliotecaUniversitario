@@ -98,7 +98,7 @@ and open the template in the editor.
                         <th>Nombre Editorial</th>
 
                         <th>Cantidad</th>
-                        <th>Eliminar</th>
+                        
 
                     </tr>
 
@@ -106,14 +106,14 @@ and open the template in the editor.
                     foreach ($cesta->getProductos() as $datosProducto) {
 
                         echo "<br><br>";
-                            echo "<tr><td> Isbn " . $producto -> getIsbn() . "</td>"; //name="borrado[' . $producto->getTitulo() . ']"
-                            echo "<td>Titulo "  . $producto -> getTitulo(). "</td>";
-                             echo "<td>Idioma "  . $producto -> getIdioma() . "</td>";
-                             echo "<td>NombreAutor "  . $producto -> getNombreAutor(). "</td>";
-                             echo "<td>Ano"  . $producto -> getAno(). "</td>";
-                             echo "<td>Tema "  . $producto -> getTema(). "</td>";
-                             echo "<td>NombreEditorial"  . $producto -> getNombreEditorial(). "</td>";
-                             echo "<td> Cantidad" . $producto->getCantidad() . "</td>";
+                            echo "<tr><td> Isbn " . $datosProducto -> getIsbn() . "</td>"; //name="borrado[' . $producto->getTitulo() . ']"
+                            echo "<td>Titulo "  . $datosProducto -> getTitulo(). "</td>";
+                             echo "<td>Idioma "  . $datosProducto -> getIdioma() . "</td>";
+                             echo "<td>NombreAutor "  . $datosProducto -> getNombreAutor(). "</td>";
+                             echo "<td>Ano"  . $datosProducto -> getAno(). "</td>";
+                             echo "<td>Tema "  . $datosProducto -> getTema(). "</td>";
+                             echo "<td>NombreEditorial"  . $datosProducto -> getNombreEditorial(). "</td>";
+                             echo "<td> Cantidad" . $datosProducto->getCantidad() . "</td>";
                         echo "</tr>";
 
                         /* Realizamos el suamtorio de cada producto */
@@ -142,41 +142,26 @@ and open the template in the editor.
 
                 /* Obtengo el id del usuario que esta en la sesion */
                 $id_usuario = $_SESSION['id_usuario'];
+                $isbnDelosLibros =  $_REQUEST['isbn'];
+                
+                $dia_presente =  date("Y-m-d");
 
-
+                $dia_devolucion = date("Y-m-d +3") ;
+                
                 /* Realizo el insert en la BBDD registrando asi que el usuario a realizado un pago acorde con un pedido */
-                $consulta = "INSERT INTO prestamo (fecha_prestamo,fecha_devolucion,isbn,id_usuario) VALUES ('$id_usuario','$sumatorio');";
+                $consulta = "INSERT INTO prestamo (fecha_prestamo,fecha_devolucion,isbn,id_usuario) VALUES ('$dia_presente','$dia_devolucion','51151','$id_usuario');";
                 $consulta = mysqli_query($conexion, $consulta)
                         or die("Fallo en la consulta");
-
-                /* Realizar consulta select donde recojo el id maximos de pedido en la tabla pedido (esto indica el ultimo pedido que ha realizado, ) */
-
-                $consulta = "SELECT MAX(id_pedido) as pedidoMaximo FROM `pedido` WHERE id_usuario=$id_usuario;";
-                $consulta = mysqli_query($conexion, $consulta)
-                        or die("Fallo en la consulta");
-
-
-                /* Extraigo de lo devuelto por la consulta el id maximo para ver el ultimo pedido del usuario */
-                $row = mysqli_fetch_assoc($consulta);
-                $pedidoIDmax = $row['pedidoMaximo'];
-
-
-                /* Tambien se ingresa los diferentes datos en la tabla detalle pedidos */
-                foreach ($cesta->getProductos() as $valores) {
-                    /* Obtenemos la cantidad y el titulo para pasarlo al insert */
-                    $cantidad = $valores->getCantidad();
-                    $tituloDelLibro = $valores->getTitulo();
-
-                    $consulta = "INSERT INTO detallepedido (tituloLibro,id_pedido,cantidad) VALUES ('$tituloDelLibro','$pedidoIDmax','$cantidad');";
-                    $consulta = mysqli_query($conexion, $consulta)
-                            or die("Fallo en la consulta");
-                }
+                
+                echo 'Se ha pedido correctamente';
+                
 
                 /* Elimino la variable de sesion cesta para evitar que sus productos sigan estando en su cesta incluso despues de haberlos comprado */
                 unset($_SESSION['cesta']);
 
                 /* Redirigimos a la página especificada, en este caso al menu  */
-                header("Location: menu.php");
+                 header("refresh:5;url=menu.php");
+               // header("Location: menu.php");
                 exit;
             }
         } else {
