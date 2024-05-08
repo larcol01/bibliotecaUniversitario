@@ -118,7 +118,7 @@ session_start();
             <hr>
             
             <?php
-     /* aqui incluyo la base de datos que antes e hecho la conexion en otra clase */
+     //aqui incluyo la base de datos que antes e hecho la conexion en otra clase 
         include 'conexion.php';
 
         // Obtenemos la conexión utilizando la función getConn() ( que hemos definido en el php de conexion a la BD)
@@ -150,8 +150,10 @@ session_start();
                 while ($row = mysqli_fetch_assoc($resultado)) {
                     ?>
                     <tbody>
-                        <tr>
+                        <tr> 
+                            
                             <!--aqui se optiene cada parte de la consulta para hacer las columnas--> 
+                            <!--con el bucle se va pasando la informacion que se ha sacado de la base de datos-->
                             <td><?php echo $row['isbn'] ?></td>
                             <td><?php echo $row['titulo'] ?></td>
                             <td><?php echo $row['idioma'] ?></td>
