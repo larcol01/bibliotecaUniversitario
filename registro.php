@@ -82,15 +82,20 @@ and open the template in the editor.
 
         // Obtenemos la conexión utilizando la función getConn() (definida en el php de conexion a la BD)
         $conexion =  getConnexion();
-        //aqui cuando se le da al boton enviar entra
+        //aqui comprueba si se ha pulsado el boton enviar para enviar el formulario
+        //si se le ha pulsado entra en el if
        if (isset($_POST['enviar'])) 
            {
-                // Verificar que los campos necesarios no estén vacíos
+                // aqui usando isset( $_REQUEST) se verifican que los campos que se solicitan no estan vacios
+                //  si hay algun campo se encuentra vacio no entra en if 
+           //si todos los campos se encuentran rellenado entra en el if
                 if(isset($_REQUEST['nombre']) && isset($_REQUEST['apellido1']) && isset($_REQUEST['apellido2']) 
                     && isset($_REQUEST['contrasena']) && isset($_REQUEST['email']) && isset($_REQUEST['telefono']) 
                     && isset($_REQUEST['dni'])) {
-
-                    //Aqui se preparan los datos para hacer el insert
+                    
+                    //despues de comprobar si los campos estan todos rellenados y luego de entrar en el if 
+                    //la informacion de los campos que se han rellendo antes se guardan en variables para luego ser introducido en la base de datos
+                 
                     $nombre = mysqli_real_escape_string($conexion, $_REQUEST['nombre']);
                     $apellido1 = mysqli_real_escape_string($conexion, $_REQUEST['apellido1']);
                     $apellido2 = mysqli_real_escape_string($conexion, $_REQUEST['apellido2']);
@@ -99,19 +104,21 @@ and open the template in the editor.
                     $telefono = mysqli_real_escape_string($conexion, $_REQUEST['telefono']);
                     $dni = mysqli_real_escape_string($conexion, $_REQUEST['dni']);
 
-                    // aqui ya se insertan los datos en la base de datos
+                    //aqui despues de guar la informacion en las variables se mete la informacion en la base de datos
+                    
                     $sql = "INSERT INTO usuario(nombre, apellido1, apellido2, nombre_usuario, contrasena, email, telefono, dni) 
                             VALUES ('$nombre', '$apellido1', '$apellido2', '$nombre', '$contrasena', '$email', '$telefono', '$dni')";
-
-                    // aqui si la consulta se ha hecho correctamente saldra un mensaje de que se ha creado bien el usuario
+                    
+                    //aqui comprobamos si la consulta que hemos hecho antes se ha hecho bien y si es asi sale un mensaje diciendo que el usuario se ha creado
+                    
                     if (mysqli_query($conexion, $sql)) {
                         echo "Se ha creado el usuario";
-                    } else //aqui si no se a hecho bien la consulta saldra un error
+                    } else //aqui si la consulta no se ha hecho bien le saldra un mensaje con un error
                         {
                         echo "Error al insertar datos: " . mysqli_error($conexion);
                     }
 
-                    // aqui cierro la conexion
+                    // aqui cerramos la conexion a la base de datos
                     mysqli_close($conexion);
                 } else //aqui si falta algun dato le saldra un mensaje de que le faltan datos
                     {
