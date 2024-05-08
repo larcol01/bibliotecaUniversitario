@@ -29,7 +29,7 @@ function imprimirCestaBorrar($cesta) {
 
             <?php
             foreach ($cesta->getProductos() as $producto) {
-               
+               //aqui saca los libros que estan en la base de datos y se saca por pantalla
                 echo "<tr><td> Isbn " . $producto -> getIsbn() . "</td>"; //name="borrado[' . $producto->getTitulo() . ']"
                echo "<td>Titulo "  . $producto -> getTitulo(). "</td>";
                 echo "<td>Idioma "  . $producto -> getIdioma() . "</td>";
@@ -169,7 +169,7 @@ function imprimirCestaBorrar($cesta) {
         <?php
         /* inicio sesion */
         session_start();
-
+        //aqui se mira que tipo rol es el usuario
         if (isset($_SESSION['usuario']) && isset($_SESSION['rol']) == 'alumno' ||  isset($_SESSION['rol']) == 'profesor' ||  isset($_SESSION['rol']) == 'doctorado') {
 
             /* Indicamos que haga referencia a usar la clase cesta y producto */
@@ -213,6 +213,7 @@ function imprimirCestaBorrar($cesta) {
                     </tr>
 
                     <?php
+                    //aqui se saca el borrado de la cesta de libros que va a pedir prestados
                     while ($row = mysqli_fetch_assoc($consulta)) {
                               $isbns = $row['isbn'];
                               $titulos= $row['titulo'];
